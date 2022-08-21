@@ -31,7 +31,7 @@ geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
 
-  let popupText = p.name;
+  let popupText = p;
   L.mountainIcon([c[1], c[0]]).addTo(map).bindPopup(popupText);
 });
 
