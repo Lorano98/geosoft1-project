@@ -30,7 +30,34 @@ geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
 
-  let popupText = p;
+  let popupText =
+    "<table  class='table table-striped table-dark table-hover'>" +
+    "  <tr>" +
+    "    <th>Name</th>" +
+    "    <td>" +
+    p.name +
+    "</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <th>Höhe</th>" +
+    "    <td>" +
+    p.hoehe +
+    "</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <th>Url</th>" +
+    "    <td>" +
+    p.url +
+    "</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <th>Beschreibung</th>" +
+    "    <td>" +
+    p.beschreibung +
+    "</td>" +
+    "  </tr>" +
+    "</table>";
+
   L.marker([c[1], c[0]], { icon: mountainIcon })
     .addTo(map)
     .bindPopup(popupText);
