@@ -15,3 +15,12 @@ button{
   max-width: 300px;
   margin: 5px 0px !important;
 }
+
+#map { 
+  height: 600px; 
+  margin-top: 10px;
+}
+
+#speichern{
+  margin-top: 5px;
+}
