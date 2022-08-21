@@ -50,6 +50,7 @@ map.on(L.Draw.Event.CREATED, function (e) {
   xInput.value = coords.lat;
   yInput.value = coords.lng;
   console.log(coords);
+  checkInputs();
 });
 
 // Löschen des letzten Punkts
@@ -59,5 +60,6 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
     coords = null;
     xInput.value = "";
     yInput.value = "";
+    checkInputs();
   }
 });
