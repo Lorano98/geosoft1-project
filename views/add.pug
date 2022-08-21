@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  script.
+    let geojson = !{JSON.stringify(data)}
   h1= title
   form(action='/add/finish' method='post')
     fieldset
@@ -24,7 +26,8 @@ block content
         label.col-sm-1.col-form-label(for='y') Y
         .col-sm-4
           input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
-      button.btn.btn-primary.mb-2(type='submit')#speichern Speichern
+      button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenSpeichern Speichern
   #map
   script(src='javascripts/gebirgeAnlegen.js')
+  script(src='javascripts/events.js')
 

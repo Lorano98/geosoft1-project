@@ -26,6 +26,15 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
+//Fügt alle Punkte auf der Karte ein
+geojson.forEach((item) => {
+  let c = item.geometry.coordinates;
+  let p = item.properties;
+
+  let popupText = p.name;
+  L.marker([c[1], c[0]]).addTo(map).bindPopup(popupText);
+});
+
 // Toolbar zum Zeichnen von Rechtecken
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
@@ -52,6 +61,7 @@ map.on(L.Draw.Event.CREATED, function (e) {
   xInput.value = coords.lat;
   yInput.value = coords.lng;
   console.log(coords);
+  checkInputs();
 });
 
 // Löschen des letzten Punkts
@@ -61,5 +71,6 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
     coords = null;
     xInput.value = "";
     yInput.value = "";
+    checkInputs();
   }
 });

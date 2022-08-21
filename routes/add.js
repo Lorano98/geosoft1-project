@@ -10,19 +10,31 @@ const collectionName = "gebirge"; // collection nam
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-  res.render("add", { title: "Gebirge anlegen" });
+  //res.render('poiAnzeigen', { title: 'POI Anzeigen' });
+  // connect to the mongodb database and retrieve all docs
+  client.connect(function (err) {
+    assert.equal(null, err);
+
+    console.log("Connected successfully to server");
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    //Finden aller Punkte
+    collection.find({}).toArray(function (err, docs) {
+      assert.equal(err, null);
+      console.log("Found the following records...");
+      console.log(docs);
+      //Übergeben der geojson an die pug Datei
+      res.render("add", { title: "Gebirge Anzeigen", data: docs });
+    });
+  });
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
 router.post("/finish", function (req, res, next) {
-  if (
-    req.body.y == null ||
-    req.body.y == "" ||
-    req.body.x == null ||
-    req.body.x == ""
-  ) {
-    res.send("Keine Koordinaten vorhanden" + '<br><a href="/add">Zurück</a> ');
-  }
+  //event.js
+  checkInputs();
   console.log("Punkt hinzugefügt");
 
   console.log(req.body);
