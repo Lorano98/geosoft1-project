@@ -1,0 +1,33 @@
+# yml template to dockerise a node.js app
+version: "2.2"
+services:
+  appservice:
+    image: laxeros/geosoft1_projekt
+    build: .
+    ports:
+      - "4000:3000"
+    depends_on:
+      - mongo
+    networks:
+      - default
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - default
+    volumes:
+      - ./mongodb:/data/db
+  mongoexpressservice:
+    image: mongo-express
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongo
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
