@@ -9,7 +9,6 @@ var yInput = document.getElementById("y");
 var mountainIcon = L.icon({
   iconUrl: "images/mountains-goal-svgrepo-com.svg",
   //shadowUrl: "leaf-shadow.png",
-
   iconSize: [38, 95], // size of the icon
   //shadowSize: [50, 64], // size of the shadow
   iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
