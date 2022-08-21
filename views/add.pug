@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1= title
+  form(action='/add/finish' method='post')
+    fieldset
+      .form-group.row
+        label.col-sm-1.col-form-label(for='pname') Name
+        .col-sm-4
+          input#poiname.form-control(type='text' name="pname" placeholder='Name')
+      .form-group.row
+        label.col-sm-1.col-form-label(for='hoehe') Höhe
+        .col-sm-4
+          input#poiname.form-control(type='number' name="hoehe" placeholder='Höhe in m')
+      .form-group.row
+        label.col-sm-1.col-form-label(for='url') Url
+        .col-sm-4
+          input#poiname.form-control(type='text' name="url" placeholder='Url')
+      .form-group.row
+        label.col-sm-1.col-form-label(for='x') X
+        .col-sm-4
+          input#x.form-control(type='text' name="x" placeholder='X Koordinate')
+      .form-group.row
+        label.col-sm-1.col-form-label(for='y') Y
+        .col-sm-4
+          input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
+      button.btn.btn-primary.mb-2(type='submit')#speichern Speichern
+  #map
+  script(src='javascripts/gebirgeAnlegen.js')
+
