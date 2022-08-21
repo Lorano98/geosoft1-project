@@ -25,42 +25,52 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-//Fügt alle Punkte auf der Karte ein
+//Fügt alle Punkte in die Tabelle ein
+
+var tabelle;
+
+tabelle =
+  "<table  class='table table-striped table-dark table-hover'>" +
+  "<tr>" +
+  "<td>" +
+  "    <th>Name</th>" +
+  "    </td>" +
+  "<td>" +
+  "    <th>Hoehe</th>" +
+  "    </td>" +
+  "<td>" +
+  "    <th>Url</th>" +
+  "    </td>" +
+  "<td>" +
+  "    <th>Beschreibung</th>" +
+  "</td>" +
+  "<td>" +
+  "    <th>x-Koordinate</th>" +
+  "</td>" +
+  "</tr>";
+
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
 
-  let popupText =
-    "<table  class='table table-striped table-dark table-hover'>" +
+  tabelle +=
     "  <tr>" +
-    "    <th>Name</th>" +
     "    <td>" +
     p.name +
     "</td>" +
-    "  </tr>" +
-    "  <tr>" +
-    "    <th>Höhe</th>" +
     "    <td>" +
     p.hoehe +
-    "</td>" +
-    "  </tr>" +
-    "  <tr>" +
-    "    <th>Url</th>" +
-    "    <td>" +
+    "    </td>" +
+    "<td>" +
     p.url +
     "</td>" +
-    "  </tr>" +
-    "  <tr>" +
-    "    <th>Beschreibung</th>" +
     "    <td>" +
     p.beschreibung +
     "</td>" +
     "  </tr>" +
-    "</table>";
-
-  L.marker([c[1], c[0]], { icon: mountainIcon })
-    .addTo(map)
-    .bindPopup(popupText);
+    L.marker([c[1], c[0]], { icon: mountainIcon })
+      .addTo(map)
+      .bindPopup(popupText);
 });
 
 var featureNames = [];
