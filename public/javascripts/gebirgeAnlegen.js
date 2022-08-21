@@ -6,8 +6,19 @@ var urlInput = document.getElementById("url");
 var xInput = document.getElementById("x");
 var yInput = document.getElementById("y");
 
+var mountainIcon = L.icon({
+  iconUrl: "images/mountains-goal-svgrepo-com.svg",
+  //shadowUrl: "leaf-shadow.png",
+
+  iconSize: [38, 95], // size of the icon
+  //shadowSize: [50, 64], // size of the shadow
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  //shadowAnchor: [4, 62], // the same for the shadow
+  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+});
+
 // Karte mit Zentrum definieren
-var map = L.map("map").setView([51.96, 7.62], 13);
+var map = L.map("map").setView([54, 25], 4);
 
 // OSM Layer
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
