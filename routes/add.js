@@ -10,7 +10,23 @@ const collectionName = "gebirge"; // collection nam
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-  res.render("add", { title: "Gebirge anlegen" });
+  //res.render('poiAnzeigen', { title: 'POI Anzeigen' });
+  // connect to the mongodb database and retrieve all docs
+  client.connect(function (err) {
+    assert.equal(null, err);
+
+    console.log("Connected successfully to server");
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    collection.find({}).toArray(function (err, docs) {
+      assert.equal(err, null);
+      console.log("Found the following records...");
+      console.log(docs);
+      res.render("add", { title: "Gebirge Anzeigen", data: docs });
+    });
+  });
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde

@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  script.
+    let geojson = !{JSON.stringify(data)}
   h1= title
   form(action='/add/finish' method='post')
     fieldset
