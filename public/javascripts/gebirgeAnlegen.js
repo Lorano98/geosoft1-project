@@ -32,7 +32,7 @@ geojson.forEach((item) => {
   let p = item.properties;
 
   let popupText = p.name;
-  L.marker([c[1], c[0]]).addTo(map).bindPopup(popupText);
+  L.mountainIcon([c[1], c[0]]).addTo(map).bindPopup(popupText);
 });
 
 // Toolbar zum Zeichnen von Rechtecken
