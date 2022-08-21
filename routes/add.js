@@ -34,7 +34,6 @@ router.get("/", function (req, res, next) {
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
 router.post("/finish", function (req, res, next) {
   //event.js
-  checkInputs();
   console.log("Punkt hinzugefügt");
 
   console.log(req.body);

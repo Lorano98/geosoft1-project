@@ -30,6 +30,9 @@ geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
 
+  console.log(isValidHttpUrl(p.url));
+  console.log(p.url.indexOf("wikipedia") !== -1);
+
   let popupText =
     "<table  class='table table-striped table-dark table-hover'>" +
     "  <tr>" +
