@@ -26,7 +26,7 @@ router.get("/", function (req, res, next) {
       console.log("Found the following records...");
       console.log(docs);
       //Übergeben der geojson an die pug Datei
-      res.render("add", { title: "Gebirge Anzeigen", data: docs });
+      res.render("add", { title: "Gebirge Anlegen", data: docs });
     });
   });
 });
