@@ -7,7 +7,7 @@ var xInput = document.getElementById("x");
 var yInput = document.getElementById("y");
 
 var mountainIcon = L.icon({
-  iconUrl: "images/mountains-goal-svgrepo-com.svg",
+  iconUrl: "images/mountain-svgrepo-com.svg",
   //shadowUrl: "leaf-shadow.png",
   iconSize: [38, 95], // size of the icon
   //shadowSize: [50, 64], // size of the shadow
