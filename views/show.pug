@@ -1,9 +1,27 @@
 extends layout
 
 block content
-  script.
-    let geojson = !{JSON.stringify(data)}
-  h1= title
-  #map
-  script(src='javascripts/gebirgeTabelle.js')
-  script(src='javascripts/events.js')
+    script.
+        let geojson = !{JSON.stringify(data)}
+    .container 
+        .row
+            h1.mb-3= title
+            .col-12.col-md-6.mb-3
+                .card.shadow.p-4
+                    h2.sub-header Karte
+                    #map
+
+            .col-12.col-md-6
+                .card.shadow.p-4
+                    h2.sub-header Tabelle
+                    table#tabelle.table.table-dark.table-striped.table-hover
+                        tr
+                            th Gebirge
+                            th Höhe
+                            th Beschreibung
+                            th X 
+                            th Y
+                            th URL
+
+        script(src='javascripts/gebirgeTabelle.js')
+        script(src='javascripts/events.js')
