@@ -1,17 +1,8 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
-    // Leaflet
-    link(rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' integrity='sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==' crossorigin='')
-    script(src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' ntegrity='sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==' crossorigin='')
-    // Draw
-    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
     head
         title= title
+        link(rel='icon' type='image/x-icon' href='/images/icon.png')
         link(rel='stylesheet' href='/stylesheets/style.css')
         link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
         // Leaflet
@@ -20,20 +11,30 @@ html
         // Draw
         link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
         script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
-        script(src='javascripts/url.js')
+        head
+            title= title
+            link(rel='stylesheet' href='/stylesheets/style.css')
+            link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor' crossorigin='anonymous')
+            // Leaflet
+            link(rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' integrity='sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==' crossorigin='')
+            script(src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' ntegrity='sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==' crossorigin='')
+            // Draw
+            link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
+            script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
+            script(src='javascripts/url.js')
 
-    body
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light
-            .container-fluid
-            a.navbar-brand Navigation
-            button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-                span.navbar-toggler-icon
-            #navbarSupportedContent.collapse.navbar-collapse
-                ul.navbar-nav.me-auto.mb-2.mb-lg-0
-                    li.nav-item
-                        a.nav-link.active(aria-current='page' href='/') Home
-                    li.nav-item
-                        a.nav-link(aria-current='page' href='/add') Gebirge anlegen
-                    li.nav-item
-                        a.nav-link(aria-current='page' href='show') Gebirge anzeigen
-        block content
+        body
+            nav.navbar.navbar-expand-lg.navbar-light.bg-light
+                .container-fluid
+                a.navbar-brand Navigation
+                button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+                    span.navbar-toggler-icon
+                #navbarSupportedContent.collapse.navbar-collapse
+                    ul.navbar-nav.me-auto.mb-2.mb-lg-0
+                        li.nav-item
+                            a.nav-link.active(aria-current='page' href='/') Home
+                        li.nav-item
+                            a.nav-link(aria-current='page' href='/add') Gebirge anlegen
+                        li.nav-item
+                            a.nav-link(aria-current='page' href='show') Gebirge anzeigen
+            block content
