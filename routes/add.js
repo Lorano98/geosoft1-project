@@ -10,6 +10,8 @@ const collectionName = "gebirge"; // collection nam
 
 const axios = require("axios").default;
 
+var gebirge;
+
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   // connect to the mongodb database and retrieve all docs
@@ -41,13 +43,15 @@ router.post("/finish", function (req, res, next) {
   // Prüfen, ob Link ungültig ist
   if (!isValidHttpUrl(req.body.url)) {
     beschr = "Keine Informationen verfügbar";
+    console.log(beschr);
     // Prüfen, ob der Link kein wikipedialink ist
   } else if (req.body.url.indexOf("wikipedia") === -1) {
     beschr = "Keine Informationen verfügbar";
+    console.log(beschr);
   } else {
     let urlArray = req.body.url.split("/");
     let title = urlArray[urlArray.length - 1];
-
+    console.log(title);
     axios
       .get(
         "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
@@ -58,10 +62,10 @@ router.post("/finish", function (req, res, next) {
         const pageKey = Object.keys(response.data.query.pages)[0];
         beschr = response.data.query.pages[pageKey].extract;
 
-        console.log("Beschreibung");
+        console.log(beschr);
 
         //geojson
-        let gebirge = {
+        gebirge = {
           type: "Feature",
           properties: {
             shape: "Marker",
@@ -72,35 +76,30 @@ router.post("/finish", function (req, res, next) {
             category: "default",
           },
           geometry: {
-            type: "gebirgent",
+            type: "gebirge",
             coordinates: [req.body.y, req.body.x],
           },
         };
-
-        // connect to the mongodb database and afterwards, insert one the new element
-        client.connect(function (err) {
-          console.log("Connected successfully to server");
-
-          const db = client.db(dbName);
-          const collection = db.collection(collectionName);
-
-          // Insert the document in the database
-          collection.insertOne(gebirge, function (err, result) {
-            console.log(
-              `Inserted ${result.insertedCount} document into the collection`
-            );
-            res.render("add_notification", {
-              title: "Vorgang abgeschlossen",
-              data: gebirge,
-            });
-          });
-        });
-      })
-      .catch(function (error) {
-        // Handle error
-        console.log(error);
       });
   }
+  // connect to the mongodb database and afterwards, insert one the new element
+  client.connect(function (err) {
+    console.log("Connected successfully to server");
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    // Insert the document in the database
+    collection.insertOne(gebirge, function (err, result) {
+      console.log(
+        `Inserted ${result.insertedCount} document into the collection`
+      );
+      res.render("add_notification", {
+        title: "Vorgang abgeschlossen",
+        data: gebirge,
+      });
+    });
+  });
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
