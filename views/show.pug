@@ -5,15 +5,15 @@ block content
         let geojson = !{JSON.stringify(data)}
     .container 
         .row
-            h1.mb-3= title
-            .col-12.col-md-6.mb-3
-                .card.shadow.p-4
-                    h2.sub-header Karte
+            h2.mb-3= title
+            .col-12.col-md-12.mb-3
+                .card.shadow.p-4(style= 'height: 400px;')
+                    h3 Karte
                     #map
 
-            .col-12.col-md-6
-                .card.shadow.p-4
-                    h2.sub-header Tabelle
+            .col-12.col-md-12
+                .card.shadow.p-4(style='height: 300px;overflow: scroll;')
+                    h3 Tabelle
                     table#tabelle.table.table-dark.table-striped.table-hover
                         tr
                             th Gebirge
