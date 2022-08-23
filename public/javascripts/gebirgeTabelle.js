@@ -25,68 +25,91 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-//Fügt alle Punkte in die Tabelle ein
+geojson.forEach((item) => {
+  let c = item.geometry.coordinates;
+  let p = item.properties;
 
-var tabelle;
+  // Prüfen, ob Link gültig ist
+  if (isValidHttpUrl(p.url)) {
+    // Prüfen, ob der Link ein wikipedialink ist
+    if (p.url.indexOf("wikipedia") !== -1) {
+      let urlArray = p.url.split("/");
+      let title = urlArray[urlArray.length - 1];
 
-tabelle =
-  "<table  class='table table-striped table-dark table-hover'>" +
-  "<tr>" +
-  "<td>" +
-  "    <th>Name</th>" +
-  "    </td>" +
-  "<td>" +
-  "    <th>Hoehe</th>" +
-  "    </td>" +
-  "<td>" +
-  "    <th>Url</th>" +
-  "    </td>" +
-  "<td>" +
-  "    <th>Beschreibung</th>" +
-  "</td>" +
-  "<td>" +
-  "    <th>x-Koordinate</th>" +
-  "</td>" +
-  "</tr>";
+      var x = new XMLHttpRequest();
+      x.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          let res = JSON.parse(this.responseText);
+          console.log(res.query.pages);
+          const pageKey = Object.keys(res.query.pages)[0];
+          const content = res.query.pages[pageKey].extract;
+          console.log(content);
+        }
+      };
+      x.open(
+        "GET",
+        "http://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&origin=*&titles=" +
+          title,
+        false
+      ); // false for synchronous request
+      x.send();
+    }
+  }
+
+  let popupText =
+    "<table  class='table table-striped table-dark table-hover'>" +
+    "  <tr>" +
+    "    <th>Name</th>" +
+    "    <td>" +
+    p.name +
+    "</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <th>Höhe</th>" +
+    "    <td>" +
+    p.hoehe +
+    "</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <th>Url</th>" +
+    "    <td>" +
+    p.url +
+    "</td>" +
+    "  </tr>" +
+    "  <tr>" +
+    "    <th>Beschreibung</th>" +
+    "    <td>" +
+    p.beschreibung +
+    "</td>" +
+    "  </tr>" +
+    "</table>";
+
+  L.marker([c[1], c[0]], { icon: mountainIcon })
+    .addTo(map)
+    .bindPopup(popupText);
+});
+
+const table = document.getElementById("tabelle");
 
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
 
-  tabelle +=
-    "  <tr>" +
-    "    <td>" +
-    p.name +
-    "</td>" +
-    "    <td>" +
-    p.hoehe +
-    "    </td>" +
-    "<td>" +
-    p.url +
-    "</td>" +
-    "    <td>" +
-    p.beschreibung +
-    "</td>" +
-    "  </tr>" +
-    L.marker([c[1], c[0]], { icon: mountainIcon })
-      .addTo(map)
-      .bindPopup(popupText);
+  let row = table.insertRow(-1);
+
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
+  let cell3 = row.insertCell(2);
+  let cell4 = row.insertCell(3);
+  let cell5 = row.insertCell(4);
+  let cell6 = row.insertCell(5);
+
+  cell1.innerHTML = p.name;
+  cell2.innerHTML = p.hoehe;
+  cell3.innerHTML = p.beschreibung;
+  cell4.innerHTML = Math.round(c[0] * 100) / 100;
+  cell5.innerHTML = Math.round(c[1] * 100) / 100;
+  cell6.innerHTML = p.url;
 });
 
-var featureNames = [];
-
-for (var i = 0; i < geoJSON.features.length; i++) {
-  var currentFeature = geoJSON.features[i];
-
-  var featureName = currentFeature.properties.Name;
-  var featureId = currentFeature.properties.FID;
-
-  console.log(featureName);
-  featureNames.push({
-    Id: featureId,
-    name: featureName,
-    hoehe: featurehoehe,
-    url: featureurl,
-    beschreibung: featurebeschreibung,
-  });
-}
+console.log(table);
