@@ -24,3 +24,7 @@ button{
 #speichern{
   margin-top: 5px;
 }
+
+#anlegenTextarea{
+  height: 300px;
+}
