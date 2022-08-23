@@ -103,6 +103,11 @@ router.post("/finish", function (req, res, next) {
   }
 });
 
+// Wird ausgeführt, wenn der Speichern Button gedrückt wurde
+router.post("/finishGeoJSON", function (req, res, next) {
+  console.log(req);
+});
+
 module.exports = router;
 
 // von Stackoverflow

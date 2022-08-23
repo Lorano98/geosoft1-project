@@ -4,29 +4,45 @@ extends layout
 
 block content
   h1= title
-  form(action='/add/finish' method='post')
-      fieldset
-          .form-group.row
-              label.col-sm-1.col-form-label(for='name') Name
-              .col-sm-4
-                  input#poiname.form-control(type='text' name="pname" placeholder='Name')
-          .form-group.row
-              label.col-sm-1.col-form-label(for='hoehe') Höhe
-              .col-sm-4
-                  input#poiname.form-control(type='number' name="hoehe" placeholder='Höhe in m')
-          .form-group.row
-              label.col-sm-1.col-form-label(for='url') Url
-              .col-sm-4
-                  input#poiname.form-control(type='text' name="url" placeholder='Url')
-          .form-group.row
-              label.col-sm-1.col-form-label(for='x') X
-              .col-sm-4
-                  input#x.form-control(type='text' name="x" placeholder='X Koordinate')
-          .form-group.row
-              label.col-sm-1.col-form-label(for='y') Y
-              .col-sm-4
-                  input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
-          button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenSpeichern Speichern
+  .row.justify-content-md-center
+    .col-lg-6.col-xs-12.mb-3
+      .card.shadow.p-4
+        form(action='/add/finish' method='post')
+            fieldset
+                .form-group.row
+                    label.col-form-label(for='name') Name
+                    div
+                      input.form-control(type='text' name="name" placeholder='Name')
+                .form-group.row
+                    label.col-form-label(for='hoehe') Höhe
+                    div
+                      input.form-control(type='number' name="hoehe" placeholder='Höhe in m')
+                .form-group.row
+                    label.col-form-label(for='url') Url
+                    div
+                      input.form-control(type='text' name="url" placeholder='Url')
+                .form-group.row
+                    label.col-form-label(for='x') X
+                    div
+                      input#x.form-control(type='text' name="x" placeholder='X Koordinate')
+                .form-group.row
+                    label.col-form-label(for='y') Y
+                    div
+                      input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
+                button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenSpeichern Speichern
+    .col-lg-6.col-xs-12.mb-3
+      .card.shadow.p-4
+        form(action='/add/finishGeoJSON' method='post')
+            fieldset
+                .form-group.row
+                  label.col-form-label(for='geojson') GeoJSON
+                  div
+                    textarea.form-control(name="geojson" placeholder='geojson')#anlegenTextarea
+                .form-group.row
+                    label.col-form-label(for='geojson') Lokale Datei laden
+                    div
+                      input#geojsonFile.form-control(type='file' name="geojson")
+                button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenGeoJSONSpeichern Speichern
   #map
 
   script.
