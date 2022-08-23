@@ -6,6 +6,9 @@ var urlInput = document.getElementById("url");
 var xInput = document.getElementById("x");
 var yInput = document.getElementById("y");
 
+xInput.addEventListener("change", () => checkInputs());
+yInput.addEventListener("change", () => checkInputs());
+
 var mountainIcon = L.icon({
   iconUrl: "images/mountain-svgrepo-com.svg",
   //shadowUrl: "leaf-shadow.png",
@@ -102,3 +105,16 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
     checkInputs();
   }
 });
+
+function checkInputs() {
+  if (
+    yInput.value == null ||
+    yInput.value == "" ||
+    xInput.value == null ||
+    xInput.value == ""
+  ) {
+    document.getElementById("anlegenSpeichern").disabled = true;
+  } else {
+    document.getElementById("anlegenSpeichern").disabled = false;
+  }
+}
