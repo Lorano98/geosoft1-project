@@ -63,25 +63,26 @@ router.post("/finish", function (req, res, next) {
         beschr = response.data.query.pages[pageKey].extract;
 
         console.log(beschr);
-
-        //geojson
-        gebirge = {
-          type: "Feature",
-          properties: {
-            shape: "Marker",
-            name: req.body.name,
-            hoehe: req.body.hoehe,
-            url: req.body.url,
-            beschreibung: beschr,
-            category: "default",
-          },
-          geometry: {
-            type: "gebirge",
-            coordinates: [req.body.y, req.body.x],
-          },
-        };
       });
   }
+
+  //geojson
+  gebirge = {
+    type: "Feature",
+    properties: {
+      shape: "Marker",
+      name: req.body.name,
+      hoehe: req.body.hoehe,
+      url: req.body.url,
+      beschreibung: beschr,
+      category: "default",
+    },
+    geometry: {
+      type: "gebirge",
+      coordinates: [req.body.y, req.body.x],
+    },
+  };
+
   // connect to the mongodb database and afterwards, insert one the new element
   client.connect(function (err) {
     console.log("Connected successfully to server");
