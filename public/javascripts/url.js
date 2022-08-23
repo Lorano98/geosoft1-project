@@ -1,5 +1,6 @@
 // von Stackoverflow
 // https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+
 function isValidHttpUrl(string) {
   let url;
 
