@@ -52,18 +52,20 @@ router.post("/finish", function (req, res, next) {
     let urlArray = req.body.url.split("/");
     let title = urlArray[urlArray.length - 1];
     console.log(title);
-    axios
-      .get(
-        "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
-          title
-      )
-      .then(function (response) {
-        // Beschreibung aus der response rausfiltern
-        const pageKey = Object.keys(response.data.query.pages)[0];
-        beschr = response.data.query.pages[pageKey].extract;
+    (async () => {
+      await axios
+        .get(
+          "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
+            title
+        )
+        .then(function (response) {
+          // Beschreibung aus der response rausfiltern
+          const pageKey = Object.keys(response.data.query.pages)[0];
+          beschr = response.data.query.pages[pageKey].extract;
 
-        console.log(beschr);
-      });
+          console.log(beschr);
+        });
+    })();
   }
 
   //geojson
