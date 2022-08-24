@@ -37,7 +37,7 @@ block content
                 .form-group.row
                   label.col-form-label(for='geojson') GeoJSON
                   div
-                    textarea.form-control(name="geojson" placeholder='geojson')#anlegenTextarea
+                    textarea.form-control(name="geojson" style=("font-family: monospace") placeholder='{\n"type": "FeatureCollection", \n"features": [{...},{...},...]\n}')#anlegenTextarea
                 .form-group.row
                     label.col-form-label(for='geojson') Lokale Datei laden
                     div

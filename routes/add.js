@@ -37,7 +37,7 @@ router.get("/", function (req, res, next) {
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
 router.post("/finish", function (req, res, next) {
   console.log("Punkt hinzugefügt");
-
+  /*
   var beschr;
 
   // Prüfen, ob Link ungültig ist
@@ -62,29 +62,31 @@ router.post("/finish", function (req, res, next) {
           // Beschreibung aus der response rausfiltern
           const pageKey = Object.keys(response.data.query.pages)[0];
           beschr = response.data.query.pages[pageKey].extract;
-
-          console.log(beschr);
         });
     })();
   }
-
+*/
   //geojson
-  gebirge = {
-    type: "Feature",
-    properties: {
-      shape: "Marker",
-      name: req.body.name,
-      hoehe: req.body.hoehe,
-      url: req.body.url,
-      beschreibung: beschr,
-      category: "default",
+  gebirge = [
+    {
+      type: "Feature",
+      properties: {
+        shape: "Marker",
+        name: req.body.name,
+        hoehe: req.body.hoehe,
+        url: req.body.url,
+        beschreibung: "",
+        category: "default",
+      },
+      geometry: {
+        type: "gebirge",
+        coordinates: [req.body.y, req.body.x],
+      },
     },
-    geometry: {
-      type: "gebirge",
-      coordinates: [req.body.y, req.body.x],
-    },
-  };
+  ];
 
+  addPoints(gebirge, res);
+  /*
   // connect to the mongodb database and afterwards, insert one the new element
   client.connect(function (err) {
     console.log("Connected successfully to server");
@@ -102,15 +104,66 @@ router.post("/finish", function (req, res, next) {
         data: gebirge,
       });
     });
-  });
+  });*/
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
 router.post("/finishGeoJSON", function (req, res, next) {
-  console.log(req);
+  addPoints(JSON.parse(req.body.geojson[0]).features, res);
 });
 
 module.exports = router;
+
+function addPoints(data, res) {
+  for (let i = 0; i < data.length; i++) {
+    var prop = data[i].properties;
+
+    // Prüfen, ob Link ungültig ist
+    if (!isValidHttpUrl(prop.url)) {
+      prop.beschreibung = "Keine Informationen verfügbar";
+      // Prüfen, ob der Link kein wikipedialink ist
+    } else if (prop.url.indexOf("wikipedia") === -1) {
+      prop.beschreibung = "Keine Informationen verfügbar";
+    } else {
+      let urlArray = prop.url.split("/");
+      let title = urlArray[urlArray.length - 1];
+      (async () => {
+        await axios
+          .get(
+            "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
+              title
+          )
+          .then(function (response) {
+            // Beschreibung aus der response rausfiltern
+            const pageKey = Object.keys(response.data.query.pages)[0];
+            prop.beschreibung = response.data.query.pages[pageKey].extract;
+            console.log("---------------beschr----------------");
+            console.log(prop.beschreibung);
+          });
+      })();
+    }
+  }
+  // connect to the mongodb database and afterwards, insert one the new element
+  client.connect(function (err) {
+    console.log("Connected successfully to server");
+
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+
+    console.log("----------data-------------");
+    console.log(data);
+    // Insert the document in the database
+    collection.insertMany(data, function (err, result) {
+      console.log(
+        `Inserted ${result.insertedCount} document into the collection`
+      );
+      res.render("add_notification", {
+        title: "Vorgang abgeschlossen",
+        data: data,
+      });
+    });
+  });
+}
 
 // von Stackoverflow
 // https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url

@@ -5,9 +5,13 @@ var hoeheInput = document.getElementById("hoehe");
 var urlInput = document.getElementById("url");
 var xInput = document.getElementById("x");
 var yInput = document.getElementById("y");
+var textareaGeoJSON = document.getElementById("anlegenTextarea");
+var fileInput = document.getElementById("geojsonFile");
 
-xInput.addEventListener("change", () => checkInputs());
-yInput.addEventListener("change", () => checkInputs());
+xInput.addEventListener("change", checkInputs);
+yInput.addEventListener("change", checkInputs);
+textareaGeoJSON.addEventListener("change", checkTextArea);
+fileInput.addEventListener("change", fileChange);
 
 var mountainIcon = L.icon({
   iconUrl: "images/mountain-svgrepo-com.svg",
@@ -117,4 +121,37 @@ function checkInputs() {
   } else {
     document.getElementById("anlegenSpeichern").disabled = false;
   }
+}
+
+function checkTextArea() {
+  if (!isJsonString(textareaGeoJSON.value)) {
+    document.getElementById("anlegenGeoJSONSpeichern").disabled = true;
+  } else {
+    document.getElementById("anlegenGeoJSONSpeichern").disabled = false;
+  }
+}
+
+// Von Stack Overflow
+// https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string
+function isJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+// Von Stack Overflow
+// https://stackoverflow.com/questions/23344776/how-to-access-data-of-uploaded-json-file
+function fileChange(event) {
+  var reader = new FileReader();
+  reader.onload = onReaderLoad;
+  reader.readAsText(event.target.files[0]);
+}
+
+function onReaderLoad(event) {
+  textareaGeoJSON.value = event.target.result;
+  checkTextArea();
+  //var obj = JSON.parse(event.target.result);
 }

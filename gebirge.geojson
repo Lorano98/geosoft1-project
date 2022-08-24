@@ -6,13 +6,27 @@
       "properties": {
         "shape": "Marker",
         "name": "Alpen",
-        "hoehe": 2000,
+        "hoehe": 4807,
         "url": "https://de.wikipedia.org/wiki/Alpen",
         "beschreibung": ""
       },
       "geometry": {
         "type": "gebirge",
         "coordinates": [10.764174511007779, 47.54687159892238]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "shape": "Marker",
+        "name": "Pyrenäen",
+        "hoehe": 3404,
+        "url": "https://de.wikipedia.org/wiki/Pyren%C3%A4en",
+        "beschreibung": ""
+      },
+      "geometry": {
+        "type": "gebirge",
+        "coordinates": [0.09179979228771451, 43.03463400789558]
       }
     }
   ]
