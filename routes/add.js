@@ -10,8 +10,6 @@ const collectionName = "gebirge"; // collection nam
 
 const axios = require("axios").default;
 
-var gebirge;
-
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   // connect to the mongodb database and retrieve all docs
@@ -67,7 +65,7 @@ router.post("/finish", function (req, res, next) {
   }
 */
   //geojson
-  gebirge = [
+  let gebirge = [
     {
       type: "Feature",
       properties: {
