@@ -121,33 +121,37 @@ module.exports = router;
 
 async function getBeschreibung() {
   //for (let i = 0; i < data.length; i++) {
-  data.forEach((element) => {
-    var prop = element.properties;
 
-    // Prüfen, ob Link ungültig ist
-    if (!isValidHttpUrl(prop.url)) {
-      prop.beschreibung = "Keine Informationen verfügbar";
-      // Prüfen, ob der Link kein wikipedialink ist
-    } else if (prop.url.indexOf("wikipedia") === -1) {
-      prop.beschreibung = "Keine Informationen verfügbar";
-    } else {
-      let urlArray = prop.url.split("/");
-      let title = urlArray[urlArray.length - 1];
+  await data.forEach((element) => {
+    (async () => {
+      var prop = element.properties;
 
-      axios
-        .get(
-          "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
-            title
-        )
-        .then(function (response) {
-          // Beschreibung aus der response rausfiltern
-          const pageKey = Object.keys(response.data.query.pages)[0];
-          prop.beschreibung = response.data.query.pages[pageKey].extract;
-          console.log("---------------beschr----------------");
-          console.log(prop.beschreibung);
-        });
-    }
+      // Prüfen, ob Link ungültig ist
+      if (!isValidHttpUrl(prop.url)) {
+        prop.beschreibung = "Keine Informationen verfügbar";
+        // Prüfen, ob der Link kein wikipedialink ist
+      } else if (prop.url.indexOf("wikipedia") === -1) {
+        prop.beschreibung = "Keine Informationen verfügbar";
+      } else {
+        let urlArray = prop.url.split("/");
+        let title = urlArray[urlArray.length - 1];
+
+        let response = await axiosAbfrage(title);
+        // Beschreibung aus der response rausfiltern
+        const pageKey = Object.keys(response.data.query.pages)[0];
+        prop.beschreibung = response.data.query.pages[pageKey].extract;
+        console.log("---------------beschr----------------");
+        console.log(prop.beschreibung);
+      }
+    })();
   });
+}
+
+async function axiosAbfrage(title) {
+  return axios.get(
+    "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
+      title
+  );
 }
 
 function addPoint(res) {
