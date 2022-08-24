@@ -65,7 +65,7 @@ router.post("/finish", function (req, res, next) {
   }
 */
   //geojson
-  let gebirge = [
+  data = [
     {
       type: "Feature",
       properties: {
@@ -83,7 +83,10 @@ router.post("/finish", function (req, res, next) {
     },
   ];
 
-  addPoints(gebirge, res);
+  (async () => {
+    await getBeschreibung();
+  })();
+  addPoint(res);
   /*
   // connect to the mongodb database and afterwards, insert one the new element
   client.connect(function (err) {
@@ -107,14 +110,19 @@ router.post("/finish", function (req, res, next) {
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
 router.post("/finishGeoJSON", function (req, res, next) {
-  addPoints(JSON.parse(req.body.geojson[0]).features, res);
+  data = JSON.parse(req.body.geojson[0]).features;
+  (async () => {
+    await getBeschreibung();
+  })();
+  addPoint(res);
 });
 
 module.exports = router;
 
-function addPoints(data, res) {
-  for (let i = 0; i < data.length; i++) {
-    var prop = data[i].properties;
+async function getBeschreibung() {
+  //for (let i = 0; i < data.length; i++) {
+  data.forEach((element) => {
+    var prop = element.properties;
 
     // Prüfen, ob Link ungültig ist
     if (!isValidHttpUrl(prop.url)) {
@@ -125,22 +133,24 @@ function addPoints(data, res) {
     } else {
       let urlArray = prop.url.split("/");
       let title = urlArray[urlArray.length - 1];
-      (async () => {
-        await axios
-          .get(
-            "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
-              title
-          )
-          .then(function (response) {
-            // Beschreibung aus der response rausfiltern
-            const pageKey = Object.keys(response.data.query.pages)[0];
-            prop.beschreibung = response.data.query.pages[pageKey].extract;
-            console.log("---------------beschr----------------");
-            console.log(prop.beschreibung);
-          });
-      })();
+
+      axios
+        .get(
+          "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
+            title
+        )
+        .then(function (response) {
+          // Beschreibung aus der response rausfiltern
+          const pageKey = Object.keys(response.data.query.pages)[0];
+          prop.beschreibung = response.data.query.pages[pageKey].extract;
+          console.log("---------------beschr----------------");
+          console.log(prop.beschreibung);
+        });
     }
-  }
+  });
+}
+
+function addPoint(res) {
   // connect to the mongodb database and afterwards, insert one the new element
   client.connect(function (err) {
     console.log("Connected successfully to server");
