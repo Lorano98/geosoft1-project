@@ -1,4 +1,5 @@
 var mark = null;
+var markerObjekt;
 var coords = null;
 var nameInput = document.getElementById("name");
 var hoeheInput = document.getElementById("hoehe");
@@ -62,7 +63,9 @@ geojson.forEach((item) => {
     "</table>";
 */
   console.log(p);
-  let m = L.marker([c[1], c[0]], { icon: mountainIcon })
+  // Alle Marker werden unter ihrer Id gespeichert
+  markerObjekt[item._id] = new L.Marker([c[1], c[0]], { icon: mountainIcon });
+  markerObjekt[item._id]
     .addTo(map)
     //.bindPopup(popupText)
     .on("click", markerClick);
@@ -128,6 +131,5 @@ function checkInputs() {
 }
 
 function markerClick(e) {
-  console.log(e.srcElement);
-  console.log(e.target);
+  markerObjekt[e.target._icon.id];
 }
