@@ -109,45 +109,49 @@ router.post("/finish", function (req, res, next) {
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
-router.post("/finishGeoJSON", function (req, res, next) {
+router.post("/finishGeoJSON", async function (req, res, next) {
+  console.log("beschreibung");
   data = JSON.parse(req.body.geojson[0]).features;
-  (async () => {
-    await getBeschreibung();
-  })();
-  addPoint(res);
+
+  await getBeschreibung();
+
+  // addPoint(res);
 });
 
 module.exports = router;
 
 async function getBeschreibung() {
-  //for (let i = 0; i < data.length; i++) {
+  //for (let i = 0; i < data.length; i++)
+  const promises = [];
 
-  await data.forEach((element) => {
-    (async () => {
-      var prop = element.properties;
+  data.forEach((element) => {
+    var prop = element.properties;
 
-      // Prüfen, ob Link ungültig ist
-      if (!isValidHttpUrl(prop.url)) {
-        prop.beschreibung = "Keine Informationen verfügbar";
-        // Prüfen, ob der Link kein wikipedialink ist
-      } else if (prop.url.indexOf("wikipedia") === -1) {
-        prop.beschreibung = "Keine Informationen verfügbar";
-      } else {
-        let urlArray = prop.url.split("/");
-        let title = urlArray[urlArray.length - 1];
+    // Prüfen, ob Link ungültig ist
+    if (!isValidHttpUrl(prop.url)) {
+      prop.beschreibung = "Keine Informationen verfügbar";
+      // Prüfen, ob der Link kein wikipedialink ist
+    } else if (prop.url.indexOf("wikipedia") === -1) {
+      prop.beschreibung = "Keine Informationen verfügbar";
+    } else {
+      let urlArray = prop.url.split("/");
+      let title = urlArray[urlArray.length - 1];
 
-        let response = await axiosAbfrage(title);
-        // Beschreibung aus der response rausfiltern
-        const pageKey = Object.keys(response.data.query.pages)[0];
-        prop.beschreibung = response.data.query.pages[pageKey].extract;
-        console.log("---------------beschr----------------");
-        console.log(prop.beschreibung);
-      }
-    })();
+      // let response = await axiosAbfrage(title);
+
+      promises.push(axiosAbfrage);
+      // Beschreibung aus der response rausfiltern
+      // const pageKey = Object.keys(response.data.query.pages)[0];
+      // prop.beschreibung = response.data.query.pages[pageKey].extract;
+      // console.log("---------------beschr----------------");
+      // console.log(prop.beschreibung);
+    }
   });
+
+  const descriptions = await Promise.all(promises);
 }
 
-async function axiosAbfrage(title) {
+function axiosAbfrage(title) {
   return axios.get(
     "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
       title
@@ -162,13 +166,13 @@ function addPoint(res) {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    console.log("----------data-------------");
-    console.log(data);
+    // console.log("----------data-------------");
+    // console.log(data);
     // Insert the document in the database
     collection.insertMany(data, function (err, result) {
-      console.log(
-        `Inserted ${result.insertedCount} document into the collection`
-      );
+      // console.log(
+      //   `Inserted ${result.insertedCount} document into the collection`
+      // );
       res.render("add_notification", {
         title: "Vorgang abgeschlossen",
         data: data,
