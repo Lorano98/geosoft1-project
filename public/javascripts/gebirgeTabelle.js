@@ -20,6 +20,8 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
+const markerArray = [];
+
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
@@ -53,9 +55,9 @@ geojson.forEach((item) => {
     "  </tr>" +
     "</table>";
 
-  L.marker([c[1], c[0]], { icon: mountainIcon })
-    .addTo(map)
-    .bindPopup(popupText);
+  let marker = L.marker([c[1], c[0]], { icon: mountainIcon });
+  marker.addTo(map).bindPopup(popupText);
+  markerArray.push(marker);
 });
 
 //Punkte und Attribute zur Tabelle hinzufügen
@@ -98,12 +100,12 @@ function addRowHandlers() {
       return function () {
         var cell = row.getElementsByTagName("td")[0];
         var id = cell.innerHTML;
-        console.log(geojson[1]);
+        //console.log(geojson[1]);
         var y = geojson[id - 1].geometry.coordinates[0];
         var x = geojson[id - 1].geometry.coordinates[1];
-        alert("id:" + id);
+        //alert("id:" + id);
         map.setView([x, y], 10);
-        //map.openpopup(geojson[id - 1]);
+        markerArray[id - 1].openPopup();
       };
     };
 
