@@ -24,8 +24,6 @@ router.get("/", function (req, res, next) {
     //Finden aller Punkte
     collection.find({}).toArray(function (err, docs) {
       assert.equal(err, null);
-      //console.log("Found the following records...");
-      //console.log(docs);
       //Übergeben der geojson an die pug Datei
       res.render("add", { title: "Gebirge Anlegen", data: docs });
     });
@@ -121,31 +119,30 @@ router.post("/finishGeoJSON", async function (req, res, next) {
 module.exports = router;
 
 async function getBeschreibung() {
-  //for (let i = 0; i < data.length; i++)
-  const promises = [];
+  //for (let i = 0; i < data.length; i++) {
 
-  data.forEach((element) => {
-    var prop = element.properties;
+  await data.forEach((element) => {
+    (async () => {
+      var prop = element.properties;
 
-    // Prüfen, ob Link ungültig ist
-    if (!isValidHttpUrl(prop.url)) {
-      prop.beschreibung = "Keine Informationen verfügbar";
-      // Prüfen, ob der Link kein wikipedialink ist
-    } else if (prop.url.indexOf("wikipedia") === -1) {
-      prop.beschreibung = "Keine Informationen verfügbar";
-    } else {
-      let urlArray = prop.url.split("/");
-      let title = urlArray[urlArray.length - 1];
+      // Prüfen, ob Link ungültig ist
+      if (!isValidHttpUrl(prop.url)) {
+        prop.beschreibung = "Keine Informationen verfügbar";
+        // Prüfen, ob der Link kein wikipedialink ist
+      } else if (prop.url.indexOf("wikipedia") === -1) {
+        prop.beschreibung = "Keine Informationen verfügbar";
+      } else {
+        let urlArray = prop.url.split("/");
+        let title = urlArray[urlArray.length - 1];
 
-      // let response = await axiosAbfrage(title);
-
-      promises.push(axiosAbfrage);
-      // Beschreibung aus der response rausfiltern
-      // const pageKey = Object.keys(response.data.query.pages)[0];
-      // prop.beschreibung = response.data.query.pages[pageKey].extract;
-      // console.log("---------------beschr----------------");
-      // console.log(prop.beschreibung);
-    }
+        let response = await axiosAbfrage(title);
+        // Beschreibung aus der response rausfiltern
+        const pageKey = Object.keys(response.data.query.pages)[0];
+        prop.beschreibung = response.data.query.pages[pageKey].extract;
+        console.log("---------------beschr----------------");
+        console.log(prop.beschreibung);
+      }
+    })();
   });
 
   const descriptions = await Promise.all(promises);

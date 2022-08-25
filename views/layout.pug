@@ -21,10 +21,8 @@ html
             // Draw
             link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
             script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
-            script(src='javascripts/url.js')
     body
         nav.navbar.navbar-expand-lg.navbar-light.bg-light
-            .container-fluid
             a.navbar-brand Navigation
             button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                 span.navbar-toggler-icon
@@ -34,6 +32,8 @@ html
                         a.nav-link.active(aria-current='page' href='/') Home
                     li.nav-item
                         a.nav-link(aria-current='page' href='/add') Gebirge anlegen
+                    li.nav-item
+                        a.nav-link(aria-current='page' href='/edit') Gebirge bearbeiten
                     li.nav-item
                         a.nav-link(aria-current='page' href='show') Gebirge anzeigen
         block content

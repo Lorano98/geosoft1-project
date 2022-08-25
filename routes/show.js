@@ -10,7 +10,6 @@ const collectionName = "gebirge"; // collection nam
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-  //res.render('poiAnzeigen', { title: 'POI Anzeigen' });
   // connect to the mongodb database and retrieve all docs
   client.connect(function (err) {
     assert.equal(null, err);

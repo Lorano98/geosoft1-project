@@ -1,10 +1,5 @@
 var mark = null;
 var coords = null;
-var nameInput = document.getElementById("name");
-var hoeheInput = document.getElementById("hoehe");
-var urlInput = document.getElementById("url");
-var xInput = document.getElementById("x");
-var yInput = document.getElementById("y");
 
 var mountainIcon = L.icon({
   iconUrl: "images/mountain-svgrepo-com.svg",
@@ -28,33 +23,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
-
-  // Prüfen, ob Link gültig ist
-  if (isValidHttpUrl(p.url)) {
-    // Prüfen, ob der Link ein wikipedialink ist
-    if (p.url.indexOf("wikipedia") !== -1) {
-      let urlArray = p.url.split("/");
-      let title = urlArray[urlArray.length - 1];
-
-      var x = new XMLHttpRequest();
-      x.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          let res = JSON.parse(this.responseText);
-          console.log(res.query.pages);
-          const pageKey = Object.keys(res.query.pages)[0];
-          const content = res.query.pages[pageKey].extract;
-          console.log(content);
-        }
-      };
-      x.open(
-        "GET",
-        "http://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&origin=*&titles=" +
-          title,
-        false
-      ); // false for synchronous request
-      x.send();
-    }
-  }
 
   //Punkte zur Karte hinzufügen
   let popupText =
