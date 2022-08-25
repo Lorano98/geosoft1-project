@@ -107,18 +107,20 @@ router.post("/finish", function (req, res, next) {
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
-router.post("/finishGeoJSON", function (req, res, next) {
+router.post("/finishGeoJSON", async function (req, res, next) {
+  console.log("beschreibung");
   data = JSON.parse(req.body.geojson[0]).features;
-  (async () => {
-    await getBeschreibung();
-  })();
-  addPoint(res);
+
+  await getBeschreibung();
+
+  // addPoint(res);
 });
 
 module.exports = router;
 
 async function getBeschreibung() {
   //for (let i = 0; i < data.length; i++) {
+
   await data.forEach((element) => {
     (async () => {
       var prop = element.properties;
@@ -142,9 +144,11 @@ async function getBeschreibung() {
       }
     })();
   });
+
+  const descriptions = await Promise.all(promises);
 }
 
-async function axiosAbfrage(title) {
+function axiosAbfrage(title) {
   return axios.get(
     "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
       title
@@ -159,13 +163,13 @@ function addPoint(res) {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    console.log("----------data-------------");
-    console.log(data);
+    // console.log("----------data-------------");
+    // console.log(data);
     // Insert the document in the database
     collection.insertMany(data, function (err, result) {
-      console.log(
-        `Inserted ${result.insertedCount} document into the collection`
-      );
+      // console.log(
+      //   `Inserted ${result.insertedCount} document into the collection`
+      // );
       res.render("add_notification", {
         title: "Vorgang abgeschlossen",
         data: data,
