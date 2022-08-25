@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  h1= title
+  .card.shadow.p-4
+      form(action='/edit/finish' method='post')
+          fieldset
+              .form-group.row
+                  label.col-form-label(for='name') Name
+                  div
+                    input.form-control(type='text' name="name" placeholder='Name')
+              .form-group.row
+                  label.col-form-label(for='hoehe') Höhe
+                  div
+                    input.form-control(type='number' name="hoehe" placeholder='Höhe in m')
+              .form-group.row
+                  label.col-form-label(for='url') Url
+                  div
+                    input.form-control(type='text' name="url" placeholder='Url')
+              .form-group.row
+                  label.col-form-label(for='x') X
+                  div
+                    input#x.form-control(type='text' name="x" placeholder='X Koordinate')
+              .form-group.row
+                  label.col-form-label(for='y') Y
+                  div
+                    input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
+              button.btn.btn-primary.mb-2(type='submit' value="speichern" disabled='')#bearbeitenSpeichern Speichern
+              button.btn.btn-primary.mb-2(type='submit' name="loeschen" disabled='')#bearbeitenLoeschen Löschen
+  #map
+
+  script.
+    let geojson = !{JSON.stringify(data)}
+
+  script(src='javascripts/gebirgeBearbeiten.js')
+ 

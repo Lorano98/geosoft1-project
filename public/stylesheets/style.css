@@ -14,6 +14,7 @@ nav{
 button{
   max-width: 300px;
   margin: 5px 0px !important;
+  margin-right: 5px !important;
 }
 
 #map { 
@@ -21,10 +22,14 @@ button{
   margin-top: 10px;
 }
 
+.cardAnlegen{
+  min-height: 560px;
+}
+
 #speichern{
   margin-top: 5px;
 }
 
 #anlegenTextarea{
-  height: 265px;
+  height: 350px;
 }

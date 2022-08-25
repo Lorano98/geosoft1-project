@@ -24,8 +24,6 @@ router.get("/", function (req, res, next) {
     //Finden aller Punkte
     collection.find({}).toArray(function (err, docs) {
       assert.equal(err, null);
-      //console.log("Found the following records...");
-      //console.log(docs);
       //Übergeben der geojson an die pug Datei
       res.render("add", { title: "Gebirge Anlegen", data: docs });
     });
@@ -121,7 +119,6 @@ module.exports = router;
 
 async function getBeschreibung() {
   //for (let i = 0; i < data.length; i++) {
-
   await data.forEach((element) => {
     (async () => {
       var prop = element.properties;
