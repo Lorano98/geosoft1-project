@@ -112,7 +112,9 @@ router.post("/finishGeoJSON", function (req, res, next) {
   (async () => {
     await getBeschreibung();
   })();
-  addPoint(res);
+  setTimeout(function () {
+    addPoint(res);
+  }, 1000);
 });
 
 module.exports = router;
