@@ -1,6 +1,7 @@
 var mark = null;
 var markerObjekt = {};
 var coords = null;
+var idInput = document.getElementById("id");
 var nameInput = document.getElementById("name");
 var hoeheInput = document.getElementById("hoehe");
 var urlInput = document.getElementById("url");
@@ -13,9 +14,9 @@ yInput.addEventListener("change", checkInputs);
 var mountainIcon = L.icon({
   iconUrl: "images/mountain-svgrepo-com.svg",
   //shadowUrl: "leaf-shadow.png",
-  iconSize: [38, 95], // size of the icon
+  iconSize: [35, 46], // size of the icon
   //shadowSize: [50, 64], // size of the shadow
-  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  iconAnchor: [17, 46], // point of the icon which will correspond to marker's location
   //shadowAnchor: [4, 62], // the same for the shadow
   popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
 });
@@ -69,12 +70,6 @@ geojson.forEach((item) => {
 
   markerObjekt[item._id]._icon.id = item._id;
   //.bindPopup(popupText)
-
-  /*function (event) {
-      console.log(event.target);
-      xInput.value = this.getLatLng().lat;
-      yInput.value = this.getLatLng().lng;
-    });*/
 });
 
 // Toolbar zum Zeichnen von Rechtecken
@@ -83,6 +78,8 @@ map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: drawnItems,
+    edit: false,
+    remove: false,
   },
   draw: {
     polygon: false,
@@ -124,19 +121,25 @@ function checkInputs() {
     xInput.value == null ||
     xInput.value == ""
   ) {
-    document.getElementById("anlegenSpeichern").disabled = true;
+    document.getElementById("bearbeitenSpeichern").disabled = true;
+    document.getElementById("bearbeitenLoeschen").disabled = true;
   } else {
-    document.getElementById("anlegenSpeichern").disabled = false;
+    document.getElementById("bearbeitenSpeichern").disabled = false;
+    document.getElementById("bearbeitenLoeschen").disabled = false;
   }
 }
 
 function markerClick(e) {
-  console.log(markerObjekt[e.target._icon.id]);
-  console.log(geojson);
-  let g = geojson.find((element) => (element._id = e.target._icon.id));
+  // Passendes Element aus dem Geojson finden
+  let g = geojson.find((element) => (element._id == e.target._icon.id));
+
+  // Füllen der Attribute
+  idInput.value = g._id;
   nameInput.value = g.properties.name;
   hoeheInput.value = g.properties.hoehe;
   urlInput.value = g.properties.url;
   xInput.value = g.geometry.coordinates[1];
   yInput.value = g.geometry.coordinates[0];
+
+  checkInputs();
 }

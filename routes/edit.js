@@ -8,6 +8,9 @@ const client = new MongoClient(url); // mongodb client
 const dbName = "mydb"; // database name
 const collectionName = "gebirge"; // collection nam
 
+var mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
+
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   // connect to the mongodb database and retrieve all docs
@@ -30,7 +33,8 @@ router.get("/", function (req, res, next) {
 
 // Wird ausgeführt, wenn der Löschen Button gedrückt wurde
 //Post Location - this post operation can be used to store new locations in the locations collection
-router.post("/finish", function (req, res, next) {
+router.post("/deleted", function (req, res, next) {
+  var id = req.body.id;
   var name = req.body.name;
 
   //Check if Name exists
@@ -38,32 +42,20 @@ router.post("/finish", function (req, res, next) {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    collection.find({ "properties.name": name }).toArray(function (err, docs) {
-      console.log("Gefunden:");
-      console.log(docs);
-
-      if (docs.length >= 1) {
-        //if the locations exists and is not in use
-        collection.deleteOne(
-          { "properties.name": name },
-          function (err, results) {
-            //delte the location from the locations collection
-          }
-        );
-        res.render("deleted", { title: "Gelöscht", data: name });
-        return;
-      } else {
-        //if the location does not exist
-        res.send(
-          `Das POI existiert nicht` + '<br><a href="/poiLoeschen">Zurück</a> '
-        );
-        return;
-      }
-
-      collection.deleteOne({ name: name }, function (err, results) {
-        res.render("deleted", { title: "Gelöscht", data: name });
+    collection
+      .find({ _id: new ObjectId(id) })
+      .toArray(function (err, docs) {
+        console.log(docs);
+        if (docs.length >= 1) {
+          //if the locations exists and is not in use
+          collection.deleteOne({ _id: new ObjectId(id) });
+          res.render("deleted", { title: "Gelöscht", data: name });
+        } else {
+          //if the location does not exist
+          res.send("Nix gefunden");
+          return;
+        }
       });
-    });
   });
 });
 

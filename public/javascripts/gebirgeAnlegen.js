@@ -76,6 +76,9 @@ map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
   edit: {
     featureGroup: drawnItems,
+    edit: false,
+    delete: false,
+    remove: false,
   },
   draw: {
     polygon: false,

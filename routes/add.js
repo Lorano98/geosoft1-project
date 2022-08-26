@@ -84,7 +84,9 @@ router.post("/finish", function (req, res, next) {
   (async () => {
     await getBeschreibung();
   })();
-  addPoint(res);
+  setTimeout(function () {
+    addPoint(res);
+  }, 1500);
   /*
   // connect to the mongodb database and afterwards, insert one the new element
   client.connect(function (err) {
@@ -114,7 +116,7 @@ router.post("/finishGeoJSON", function (req, res, next) {
   })();
   setTimeout(function () {
     addPoint(res);
-  }, 1000);
+  }, 1500);
 });
 
 module.exports = router;
