@@ -150,7 +150,7 @@ async function getBeschreibung() {
 
 async function axiosAbfrage(title) {
   return axios.get(
-    "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
+    "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=2&origin=*&titles=" +
       title
   );
 }

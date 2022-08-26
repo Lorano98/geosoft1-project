@@ -28,6 +28,20 @@
         "type": "gebirge",
         "coordinates": [0.09179979228771451, 43.03463400789558]
       }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "shape": "Marker",
+        "name": "Sauerland",
+        "hoehe": 843,
+        "url": "https://de.wikipedia.org/wiki/Sauerland",
+        "beschreibung": ""
+      },
+      "geometry": {
+        "type": "gebirge",
+        "coordinates": [8.498994904157136, 51.198596216358446]
+      }
     }
   ]
 }
