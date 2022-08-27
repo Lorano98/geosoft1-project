@@ -2,18 +2,14 @@ function collapse() {
   let button = document.getElementById("collButton");
   let navbarContent = document.getElementById("navbarSupportedContent");
   if (button.getAttribute("aria-expanded") == "true") {
+    navbarContent.classList.remove("show");
+
+    document.getElementById("collButton").setAttribute("aria-expanded", false);
+    document.getElementById("collButton").classList.add("collapsed");
   } else {
     document.getElementById("collButton").setAttribute("aria-expanded", true);
-    document.getElementById("collButton").remove("collapsed");
+    document.getElementById("collButton").classList.remove("collapsed");
 
-    navbarContent.classList.remove("collapse");
-    navbarContent.classList.add("collapsing");
-    navbarContent.style = "height: 208px";
-    setTimeout(function () {
-      navbarContent.classList.remove("collapsing");
-      navbarContent.classList.add("collapse");
-      navbarContent.classList.add("show");
-      navbarContent.style = "";
-    }, 1000);
+    navbarContent.classList.add("show");
   }
 }
