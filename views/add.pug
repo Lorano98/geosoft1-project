@@ -50,6 +50,8 @@ block content
 
   script.
     let geojson = !{JSON.stringify(data)}
+    document.querySelectorAll(".active")[0].classList.remove("active");
+    document.querySelectorAll(".nav-link")[1].classList.add("active");
 
   script(src='javascripts/gebirgeAnlegen.js')
 

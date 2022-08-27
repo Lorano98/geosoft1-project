@@ -1,6 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  min-height: 100%;
 }
 
 a {
@@ -8,7 +9,8 @@ a {
 }
 
 nav{
-  margin-bottom: 5px;
+  margin-bottom: 20px;
+  padding: 8px !important;
 }
 
 button{

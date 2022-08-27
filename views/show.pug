@@ -3,6 +3,9 @@ extends layout
 block content
     script.
         let geojson = !{JSON.stringify(data)}
+        // Set active Button
+        document.querySelectorAll(".active")[0].classList.remove("active");
+        document.querySelectorAll(".nav-link")[3].classList.add("active");
     .container 
         .row
             h1.mb-3 Gebirge anzeigen
