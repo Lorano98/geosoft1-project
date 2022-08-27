@@ -21,9 +21,9 @@ html
             // Draw
             link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
             script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
-    body
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light
-            a.navbar-brand Navigation
+    body.bg-dark.text-light
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary.mb-3
+            a.navbar-brand.p-2 Navigation
             button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             #navbarSupportedContent.collapse.navbar-collapse
@@ -37,14 +37,14 @@ html
                     li.nav-item
                         a.nav-link(aria-current='page' href='/show') Gebirge anzeigen
                     li.nav-item
-                        a.nav-link(aria-current='page' href='/routing') Navigation
+                        a.nav-link(aria-current='page' href='/routing') Route
         block content
 
 
-        footer.bg-light.text-center.text-lg-start.mt-auto
+        footer.bg-secondary.text-center.text-lg-start.mt-auto
             // Grid container
             .container.p-4
-                a(href='impressum') Impressum
+                a.text-info(href='impressum') Impressum
             // Copyright
             .text-center.p-3(style='background-color: rgba(0, 0, 0, 0.2);')
                 | &copy; 2020 Copyright:

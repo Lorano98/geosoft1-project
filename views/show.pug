@@ -5,13 +5,13 @@ block content
         let geojson = !{JSON.stringify(data)}
     .container 
         .row
-            h2.mb-3= title
+            h1.mb-3 Gebirge anzeigen
             .col-12.col-md-12.mb-3
                 .card.shadow.p-4(style= 'height: 400px;')
                     h3 Karte
                     #map
 
-            .col-12.col-md-12
+            .col-12.col-md-12.mb-3
                 .card.shadow.p-4(style='height: 300px;overflow: scroll;')
                     h3 Tabelle
                     table#tabelle.table.table-dark.table-striped.table-hover
