@@ -1,0 +1,12 @@
+extends layout
+block content
+    script.
+        let geojson = !{JSON.stringify(data)}
+    .container 
+        .row
+            h2.mb-3= Route 
+                .col-12.col-md-12.mb-3
+                    .card.text-dark.shadow.p-4(style= 'height: 400px;')
+                        h3 Karte
+                        #map
+        script(src='javascripts/routenAnzeigen.js')
