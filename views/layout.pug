@@ -21,11 +21,11 @@ html
             // Draw
             link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css')
             script(src='https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js')
-<<<<<<< HEAD
-    body.d-flex.flex-column.min-vh-100
-        nav.navbar.navbar-expand-lg.navbar-light.bg-light
+
+    body.bg-dark.text-light.d-flex.flex-column.min-vh-100
+        nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary.mb-3
             .container-fluid
-                a.navbar-brand Navigation
+                a.navbar-brand.p-2 Navigation
                 button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
                     span.navbar-toggler-icon
                 #navbarSupportedContent.collapse.navbar-collapse
@@ -38,25 +38,9 @@ html
                             a.nav-link(aria-current='page' href='/edit') Gebirge bearbeiten
                         li.nav-item
                             a.nav-link(aria-current='page' href='/show') Gebirge anzeigen
-=======
-    body.bg-dark.text-light
-        nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary.mb-3
-            a.navbar-brand.p-2 Navigation
-            button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-                span.navbar-toggler-icon
-            #navbarSupportedContent.collapse.navbar-collapse
-                ul.navbar-nav.me-auto.mb-2.mb-lg-0
-                    li.nav-item
-                        a.nav-link.active(aria-current='page' href='/') Home
-                    li.nav-item
-                        a.nav-link(aria-current='page' href='/add') Gebirge anlegen
-                    li.nav-item
-                        a.nav-link(aria-current='page' href='/edit') Gebirge bearbeiten
-                    li.nav-item
-                        a.nav-link(aria-current='page' href='/show') Gebirge anzeigen
-                    li.nav-item
-                        a.nav-link(aria-current='page' href='/routing') Route
->>>>>>> 9de13a6ab00c1653611bd6f7732a6cbe6a73d847
+                        li.nav-item
+                            a.nav-link(aria-current='page' href='/routing') Route
+        
         block content
 
 
