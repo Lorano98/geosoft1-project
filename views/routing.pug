@@ -1,0 +1,8 @@
+extends layout
+block content
+    script.
+        let geojson = !{JSON.stringify(data)}
+    .container 
+        .row
+            h2.mb-3= Navigation
+        script(src='javascripts/routenAnzeigen.js')
