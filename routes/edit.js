@@ -33,7 +33,7 @@ router.get("/", function (req, res, next) {
 
 // Wird ausgeführt, wenn der Löschen Button gedrückt wurde
 //Post Location - this post operation can be used to store new locations in the locations collection
-router.post("/deleted", function (req, res, next) {
+router.post("/del_notification", function (req, res, next) {
   var id = req.body.id;
   var name = req.body.name;
 
@@ -49,7 +49,7 @@ router.post("/deleted", function (req, res, next) {
         if (docs.length >= 1) {
           //if the locations exists and is not in use
           collection.deleteOne({ _id: new ObjectId(id) });
-          res.render("deleted", { title: "Gelöscht", data: name });
+          res.render("del_notification", { title: "Gelöscht", data: name });
         } else {
           //if the location does not exist
           res.send("Nix gefunden");
