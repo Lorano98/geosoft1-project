@@ -32,7 +32,7 @@ block content
                     div
                       input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
                 button.btn.btn-primary.mb-2(type='submit' value="speichern" disabled='')#bearbeitenSpeichern Speichern
-                button.btn.btn-primary.mb-2(type='submit' formaction="/edit/deleted" disabled='')#bearbeitenLoeschen Löschen
+                button.btn.btn-primary.mb-2(type='submit' formaction="/edit/del_notification" disabled='')#bearbeitenLoeschen Löschen
     .col-lg-8.col-xs-12.mb-3
       .card.shadow.p-4(style= 'height: 100%;')
         h3 Gebirge anklicken:
@@ -40,6 +40,9 @@ block content
 
   script.
     let geojson = !{JSON.stringify(data)}
+    // Set active Button
+    document.querySelectorAll(".active")[0].classList.remove("active");
+    document.querySelectorAll(".nav-link")[2].classList.add("active");
 
   script(src='javascripts/gebirgeBearbeiten.js')
  
