@@ -26,12 +26,23 @@ var standortIcon = L.icon({
 
 // Karte mit Zentrum definieren
 var map = L.map("map").setView([54, 25], 4);
-
-// OSM Layer
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+//OSM Layer
+var osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution:
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
+
+var OpenTopoMap = L.tileLayer(
+  "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+  {
+    maxZoom: 17,
+    attribution:
+      'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+  }
+);
+
+//Array für GebirgeMarker
+var mountains = [];
 
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
@@ -67,8 +78,25 @@ geojson.forEach((item) => {
     "</table>";
 
   let marker = L.marker([c[1], c[0]], { icon: mountainIcon });
-  marker.addTo(map).bindPopup(popupText);
+  marker.bindPopup(popupText);
+
+  mountains.push(marker);
 });
+
+//Layer mit gebirgen
+var mountainsLayer = L.layerGroup(mountains);
+
+//Basemaps immer nur eine aktiv
+var baseMaps = {
+  OpenStreetMap: osm,
+  Topographische_Karte: OpenTopoMap,
+};
+//OverlayMaps nach belieben aktivieren
+var overlayMaps = {
+  Gebirge: mountainsLayer,
+};
+//Layer Controlbar
+var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 function getLocation() {
   var standort = [];
