@@ -8,6 +8,16 @@ const client = new MongoClient(url); // mongodb client
 const dbName = "mydb"; // database name
 const collectionName = "gebirge"; // collection nam
 
+//Mapbox
+var mapboxgl = require("mapbox-gl");
+var MapboxDirections = require("@mapbox/mapbox-gl-directions");
+
+var directions = new MapboxDirections({
+  accessToken: "YOUR-MAPBOX-ACCESS-TOKEN",
+  unit: "metric",
+  profile: "mapbox/cycling",
+});
+
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   // connect to the mongodb database and retrieve all docs
