@@ -1,3 +1,6 @@
+/**
+ * Steuert das Collapseverhalten der navbar, da es nur mit Bootstrap nicht funktioniert hat.
+ */
 function collapse() {
   let button = document.getElementById("collButton");
   let navbarContent = document.getElementById("navbarSupportedContent");
