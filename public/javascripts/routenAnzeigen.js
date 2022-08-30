@@ -23,6 +23,56 @@ var standortIcon = L.icon({
   //shadowAnchor: [4, 62], // the same for the shadow
   popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
 });
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoiYndhZGFtc29uIiwiYSI6ImNqajZhNm1idDFzMjIza3A2Y3ZmdDV6YWYifQ.9NhptR7a9D0hzWXR51y_9w";
+var map = new mapboxgl.Map({
+  container: "map",
+  style: "mapbox://styles/mapbox/streets-v9",
+  center: [54, 25],
+  zoom: 4,
+});
+
+map.on("load", function () {
+  var directions = new MapboxDirections({
+    accessToken: mapboxgl.accessToken,
+  });
+  map.addControl(directions, "top-left");
+
+  directions.setOrigin("Schwabenstraße 15, Bocholt, Deutschland");
+  directions.setDestination("Gasselstiege 48, Münster, Deutschland");
+});
+
+/*
+L.mapbox.accessToken =
+  "pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ";
+
+var mapboxTiles = L.tileLayer(
+  "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=" +
+    L.mapbox.accessToken,
+  {
+    attribution:
+      '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    tileSize: 512,
+    zoomOffset: -1,
+  }
+);
+
+var map = L.map("map").addLayer(mapboxTiles).setView([42.361, -71.0587], 15);
+L.routing
+  .control({
+    router: L.routing.mapbox(L.mapbox.accessToken, {
+      profile: "mapbox/walking",
+      language: "en",
+    }),
+    waypoints: [
+      L.latLng(40.779625, -73.969111),
+      L.latLng(40.767949, -73.971855),
+    ],
+  })
+  .addTo(map);
+  */
+/*
 //Mapbox
 var map = new mapboxgl.Map({
   container: "map",
@@ -30,7 +80,7 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(directions, "top-left");
-
+*/
 // Karte mit Zentrum definieren
 // var map = L.map("map").setView([54, 25], 4);
 // //OSM Layer
