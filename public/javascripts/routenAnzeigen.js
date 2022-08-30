@@ -1,5 +1,8 @@
+//import myImage from "/images/mountain-svgrepo-com.svg";
+
 var mark = null;
 var coords = null;
+var directions;
 
 let standortKnopf = document.getElementById("meinStandort");
 standortKnopf.addEventListener("click", getLocation);
@@ -29,49 +32,63 @@ mapboxgl.accessToken =
 var map = new mapboxgl.Map({
   container: "map",
   style: "mapbox://styles/mapbox/streets-v9",
-  center: [54, 25],
-  zoom: 4,
+  center: [25, 54],
+  zoom: 2,
 });
 
 map.on("load", function () {
-  var directions = new MapboxDirections({
+  directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
   });
   map.addControl(directions, "top-left");
 
-  directions.setOrigin("Schwabenstraße 15, Bocholt, Deutschland");
-  directions.setDestination("Gasselstiege 48, Münster, Deutschland");
+  //directions.setOrigin("Schwabenstraße 15, Bocholt, Deutschland");
+  //directions.setDestination("Gasselstiege 48, Münster, Deutschland");
+
+  // From Doku
+  // https://docs.mapbox.com/mapbox-gl-js/example/custom-marker-icons/
+  // Add markers to the map.
+  for (const marker of geojson) {
+    // Create a DOM element for each marker.
+    const el = document.createElement("div");
+    el.className = "marker";
+    el.style.backgroundImage = "url(images/mountain-svgrepo-com.svg)";
+    el.style.width = "25px";
+    el.style.height = "25px";
+    el.style.backgroundSize = "100%";
+
+    el.addEventListener("click", () => {
+      window.alert(marker.geometry.coordinates);
+      directions.setDestination(marker.geometry.coordinates);
+    });
+
+    // Add markers to the map.
+    new mapboxgl.Marker(el).setLngLat(marker.geometry.coordinates).addTo(map);
+  }
+  /*
+  map.loadImage(myImage, (error, image) => {
+    if (error) throw error;
+    // Add the image to the map style.
+    map.addImage("berg", image);
+
+    // Add a data source containing one point feature.
+    map.addSource("gebirge", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: geojson,
+      },
+    });
+
+    // Add a layer to use the image to represent the data.
+    map.addLayer({
+      id: "gebirge",
+      type: "symbol",
+      source: "gebirge", // reference the data source
+    });
+  });*/
 });
 
-/*
-L.mapbox.accessToken =
-  "pk.eyJ1IjoiZmFyYWRheTIiLCJhIjoiTUVHbDl5OCJ9.buFaqIdaIM3iXr1BOYKpsQ";
-
-var mapboxTiles = L.tileLayer(
-  "https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=" +
-    L.mapbox.accessToken,
-  {
-    attribution:
-      '© <a href="https://www.mapbox.com/feedback/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    tileSize: 512,
-    zoomOffset: -1,
-  }
-);
-
-var map = L.map("map").addLayer(mapboxTiles).setView([42.361, -71.0587], 15);
-L.routing
-  .control({
-    router: L.routing.mapbox(L.mapbox.accessToken, {
-      profile: "mapbox/walking",
-      language: "en",
-    }),
-    waypoints: [
-      L.latLng(40.779625, -73.969111),
-      L.latLng(40.767949, -73.971855),
-    ],
-  })
-  .addTo(map);
-  */
 /*
 //Mapbox
 var map = new mapboxgl.Map({
@@ -160,7 +177,11 @@ function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
       standort.push(position.coords.latitude, position.coords.longitude);
-      var marker = new L.marker(standort, { icon: standortIcon }).addTo(map);
+      directions.setOrigin([standort[1], standort[0]]);
+      const marker = new mapboxgl.Marker()
+        .setLngLat([standort[1], standort[0]])
+        .addTo(map);
+      //var marker = new L.marker(standort, { icon: standortIcon }).addTo(map);
     });
   } else {
     x.innerHTML = "Geolocation is not supported by this browser.";

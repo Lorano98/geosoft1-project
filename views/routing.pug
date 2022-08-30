@@ -10,8 +10,8 @@ block content
         .row
             h2.mb-3= Route 
                 .col-12.col-md-12.mb-3
-                    .card.text-dark.shadow.p-4(style= 'height: 400px;')
+                    .card.text-dark.shadow.p-4(style= 'height: 600px;')
                         h3 Karte
                         button.btn.btn-primary.mb-2#meinStandort Standort ermitteln
                         #map
-        script(src='javascripts/routenAnzeigen.js')
+        script(src='javascripts/routenAnzeigen.js', type="module")
