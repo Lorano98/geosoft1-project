@@ -13,6 +13,8 @@ const axios = require("axios").default;
 var mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 
+var beschreibung = "test";
+
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   // connect to the mongodb database and retrieve all docs
@@ -37,11 +39,7 @@ router.get("/", function (req, res, next) {
 //Post Location - this post operation can be used to store new locations in the locations collection
 router.post("/update_notification", function (req, res, next) {
   let id = req.body.id;
-  let name = req.body.name;
-  let hoehe = req.body.hoehe;
-  let url = req.body.url;
-  let beschreibung;
-  beschreibung = getBeschreibung(url);
+  getBeschreibung(req.body.url);
 
   // Await hat nicht funktioniert
   setTimeout(function () {
@@ -58,10 +56,13 @@ router.post("/update_notification", function (req, res, next) {
             {
               $set: {
                 properties: {
-                  name: name,
-                  hoehe: hoehe,
-                  url: url,
+                  name: req.body.name,
+                  hoehe: req.body.hoehe,
+                  url: req.body.url,
                   beschreibung: beschreibung,
+                },
+                geometry: {
+                  coordinates: [req.body.y, req.body.x],
                 },
               },
             },
@@ -69,7 +70,7 @@ router.post("/update_notification", function (req, res, next) {
           );
           res.render("update_notification", {
             title: "Bearbeitet",
-            data: name,
+            data: req.body.name,
           });
         } else {
           //if the location does not exist
@@ -111,10 +112,10 @@ module.exports = router;
 async function getBeschreibung(url) {
   // Prüfen, ob Link ungültig ist
   if (!isValidHttpUrl(url)) {
-    return "Keine Informationen verfügbar";
+    beschreibung = "Keine Informationen verfügbar";
     // Prüfen, ob der Link kein wikipedialink ist
   } else if (url.indexOf("wikipedia") === -1) {
-    return "Keine Informationen verfügbar";
+    beschreibung = "Keine Informationen verfügbar";
   } else {
     let urlArray = url.split("/");
     let title = urlArray[urlArray.length - 1];
@@ -122,7 +123,7 @@ async function getBeschreibung(url) {
     let response = await axiosAbfrage(title);
     // Beschreibung aus der response rausfiltern
     const pageKey = Object.keys(response.data.query.pages)[0];
-    return response.data.query.pages[pageKey].extract;
+    beschreibung = response.data.query.pages[pageKey].extract;
   }
 }
 

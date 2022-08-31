@@ -32,8 +32,6 @@ router.get("/", function (req, res, next) {
     //Finden aller Punkte
     collection.find({}).toArray(function (err, docs) {
       assert.equal(err, null);
-      console.log("Found the following records...");
-      console.log(docs);
       //Übergeben der geojson an die pug Datei
       res.render("routing", { title: "Route zu Gebirgen", data: docs });
     });

@@ -72,7 +72,7 @@ geojson.forEach((item) => {
   //.bindPopup(popupText)
 });
 
-// Toolbar zum Zeichnen von Rechtecken
+// Toolbar zum Zeichnen
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
@@ -131,7 +131,7 @@ function checkInputs() {
 
 function markerClick(e) {
   // Passendes Element aus dem Geojson finden
-  let g = geojson.find((element) => (element._id == e.target._icon.id));
+  let g = geojson.find((element) => element._id == e.target._icon.id);
 
   // Füllen der Attribute
   idInput.value = g._id;
