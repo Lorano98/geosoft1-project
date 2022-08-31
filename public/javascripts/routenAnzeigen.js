@@ -45,7 +45,7 @@ map.on("load", function () {
   //directions.setOrigin("Schwabenstraße 15, Bocholt, Deutschland");
   //directions.setDestination("Gasselstiege 48, Münster, Deutschland");
 
-  // From Doku
+  // Quelle:
   // https://docs.mapbox.com/mapbox-gl-js/example/custom-marker-icons/
   // Add markers to the map.
   for (const marker of geojson) {
