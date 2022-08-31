@@ -141,8 +141,6 @@ async function getBeschreibung() {
         // Beschreibung aus der response rausfiltern
         const pageKey = Object.keys(response.data.query.pages)[0];
         prop.beschreibung = response.data.query.pages[pageKey].extract;
-        console.log("---------------beschr----------------");
-        console.log(prop.beschreibung);
       }
     })();
   });
