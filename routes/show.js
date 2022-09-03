@@ -23,7 +23,7 @@ router.get("/", function (req, res, next) {
     collection.find({}).toArray(function (err, docs) {
       assert.equal(err, null);
       //Übergeben der geojson an die pug Datei
-      res.render("show", { title: "Tabelle von Gebirgen", data: docs });
+      res.render("show", { title: "Gebirge anzeigen", data: docs });
     });
   });
 });

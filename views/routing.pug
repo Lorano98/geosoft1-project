@@ -1,6 +1,6 @@
 extends layout
 block content
-    h1.text-light.mb-3 Route brechnen
+
     script.
         let geojson = !{JSON.stringify(data)}
         // Set active Button
@@ -8,10 +8,10 @@ block content
         document.querySelectorAll(".nav-link")[4].classList.add("active");
     .container 
         .row
-            h2.mb-3= Route 
-                .col-12.col-md-12.mb-3
-                    .card.text-dark.shadow.p-4(style= 'height: 600px;')
-                        h3 Karte
-                        button.btn.btn-primary.mb-2#meinStandort Standort ermitteln
-                        #map
-        script(src='javascripts/routenAnzeigen.js', type="module")
+            h1.text-light Route berechnen
+            .col-12.col-md-12.mb-3
+                .card.text-dark.shadow.p-4(style= 'height: 600px;')
+                    h3 Karte
+                    button.btn.btn-primary.mb-2#meinStandort Standort ermitteln
+                    #map
+        script(src='javascripts/routenAnzeigen.js' type="module")

@@ -3,57 +3,58 @@ extends layout
 
 
 block content
-  h1= title
-  .row.justify-content-md-center
-    .col-lg-6.col-xs-12.mb-3
-      .card.text-dark.shadow.p-4.cardAnlegen
-        form(action='/add/finish' method='post')
-          fieldset
-            .form-group.row
-              label.col-form-label(for='name') Name
-              div
-                input.form-control(type='text' name="name" placeholder='Name')
-            .form-group.row
-              label.col-form-label(for='hoehe') Höhe
-              div
-                input.form-control(type='number' name="hoehe" placeholder='Höhe in m')
-            .form-group.row
-              label.col-form-label(for='url') Url
-              div
-                input.form-control(type='text' name="url" placeholder='http://de.wikipedia.org')
-            .form-group.row
-              label.col-form-label(for='x') X
-              div
-                input#x.form-control(type='text' name="x" placeholder='X Koordinate')
-            .form-group.row
-              label.col-form-label(for='y') Y
-              div
-                input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
-            button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenSpeichern Speichern
-    .col-lg-6.col-xs-12.mb-3
-      .card.text-dark.text-dark.shadow.p-4.cardAnlegen
-        form(action='/add/finishGeoJSON' method='post')
-          fieldset
-            .form-group.row
-              label.col-form-label(for='geojson') GeoJSON
-              div
-                textarea.form-control(name="geojson" style=("font-family: monospace; font-size: 13px") placeholder='{\n  "type": "FeatureCollection", \n  "features": [{\n    "type": "Feature",\n    "properties": {\n      "shape": "Marker",\n      "name": "Alpen",\n      "hoehe": 4807,\n      "url": "https://de.wikipedia.org/wiki/Alpen",\n    },\n    "geometry": {\n      "type": "gebirge",\n      "coordinates": [10.764174511007779, 47.54687159892238]\n    }\n  },\n  {...},...]\n}')#anlegenTextarea
-            .form-group.row
-              label.col-form-label(for='geojson') Lokale Datei laden
-              div
-                input#geojsonFile.form-control(type='file' name="geojson" accept=".json, .geojson")
-            button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenGeoJSONSpeichern Speichern
-  .col-lg-12.col-xs-12.mb-3
-    .card.text-dark.shadow.p-4(style= 'height: 600px;')
-      h3 Punkt erfassen:
-      #map
+  .container
+    h1= title
+    .row.justify-content-md-center
+      .col-lg-6.col-xs-12.mb-3
+        .card.text-dark.shadow.p-4.cardAnlegen
+          form(action='/add/finish' method='post')
+            fieldset
+              .form-group.row
+                label.col-form-label(for='name') Name
+                div
+                  input.form-control(type='text' name="name" placeholder='Name')
+              .form-group.row
+                label.col-form-label(for='hoehe') Höhe
+                div
+                  input.form-control(type='number' name="hoehe" placeholder='Höhe in m')
+              .form-group.row
+                label.col-form-label(for='url') Url
+                div
+                  input.form-control(type='text' name="url" placeholder='http://de.wikipedia.org')
+              .form-group.row
+                label.col-form-label(for='x') X
+                div
+                  input#x.form-control(type='text' name="x" placeholder='X Koordinate')
+              .form-group.row
+                label.col-form-label(for='y') Y
+                div
+                  input#y.form-control(type='text' name="y" placeholder='Y Koordinate')
+              button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenSpeichern Speichern
+      .col-lg-6.col-xs-12.mb-3
+        .card.text-dark.text-dark.shadow.p-4.cardAnlegen
+          form(action='/add/finishGeoJSON' method='post')
+            fieldset
+              .form-group.row
+                label.col-form-label(for='geojson') GeoJSON
+                div
+                  textarea.form-control(name="geojson" style=("font-family: monospace; font-size: 13px") placeholder='{\n  "type": "FeatureCollection", \n  "features": [{\n    "type": "Feature",\n    "properties": {\n      "shape": "Marker",\n      "name": "Alpen",\n      "hoehe": 4807,\n      "url": "https://de.wikipedia.org/wiki/Alpen",\n    },\n    "geometry": {\n      "type": "gebirge",\n      "coordinates": [10.764174511007779, 47.54687159892238]\n    }\n  },\n  {...},...]\n}')#anlegenTextarea
+              .form-group.row
+                label.col-form-label(for='geojson') Lokale Datei laden
+                div
+                  input#geojsonFile.form-control(type='file' name="geojson" accept=".json, .geojson")
+              button.btn.btn-primary.mb-2(type='submit' disabled='')#anlegenGeoJSONSpeichern Speichern
+    .col-lg-12.col-xs-12.mb-3
+      .card.text-dark.shadow.p-4(style= 'height: 600px;')
+        h3 Punkt erfassen:
+        #map
 
-  script.
-    let geojson = !{JSON.stringify(data)}
-    document.querySelectorAll(".active")[0].classList.remove("active");
-    document.querySelectorAll(".nav-link")[1].classList.add("active");
+    script.
+      let geojson = !{JSON.stringify(data)}
+      document.querySelectorAll(".active")[0].classList.remove("active");
+      document.querySelectorAll(".nav-link")[1].classList.add("active");
 
-  script(src='javascripts/gebirgeAnlegen.js')
+    script(src='javascripts/gebirgeAnlegen.js')
 
 
 

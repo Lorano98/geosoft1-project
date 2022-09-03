@@ -17,7 +17,7 @@ html
     script(src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.js')
     link(rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.css' type='text/css')
 
-
+  img.mb-1(src="/images/Valinor.png")
   body.bg-dark.text-light.d-flex.flex-column.min-vh-100
     nav.navbar.navbar-expand-lg.navbar-dark.bg-secondary.mb-3
       .container-fluid
@@ -43,7 +43,7 @@ html
     footer.bg-secondary.text-center.text-lg-start.mt-auto
       // Grid container
       .container.p-4
-        a.text-info(href='impressum') Impressum
+        a.text-info(aria-current='page' href='/impressum') Impressum
       // Copyright
       .text-center.p-3(style='background-color: rgba(0, 0, 0, 0.2);')
         | &copy; 2020 Copyright:

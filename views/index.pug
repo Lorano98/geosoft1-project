@@ -1,5 +1,35 @@
 extends layout
 
 block content
-    h1= title
-    p Welcome to #{title}
+    .container
+        .row
+            h1 Home
+            t.mb-3 Welcome to Valinor
+            .col-12.col-md-6.mb-3
+                .card.text-dark.shadow.p-4(style= 'height: 250px;')
+                    a.h3(aria-current='page' href='/add') Gebirge anlegen
+                    a(style = 'text-align: justify') Unter Gebirge anlegen kann man Gebirge mithilfe einer Karte
+                        | zur Datenbank hinzufügen oder auch händisch per Input-Felder. Außerdem hat man 
+                        | die Möglichkeit eine JSON-Datei mit Gebirgen hochzuladen.
+            .col-12.col-md-6.mb-3
+                .card.text-dark.shadow.p-4(style= 'height: 250px;')
+                    a.h3(aria-current='page' href='/edit') Gebirge bearbeiten
+                    a(style = 'text-align: justify') Unter Gebirge bearbeiten kann man durch anklicken eines
+                        | Markers auf der Karte die Attribute des ausgewählten Gebirges bearbeiten und speichern.
+                        | Zudem kann man die Gebirge auch aus der Datenbank löschen. Auch hier hat man 
+                        | die Möglichkeit alles händisch über die Input-Felder zu machen.
+            .col-12.col-md-6.mb-3
+                .card.text-dark.shadow.p-4(style= 'height: 250px;')
+                    a.h3(aria-current='page' href='/show') Gebirge anzeigen
+                    a(style = 'text-align: justify')
+                        | Unter Gebirge aneigen werden die Standorte auf einer Karte wiedergegeben. 
+                        | Man hat außerdem die Möglichkeit auf eine Tabelle mit allen in der Datenbank
+                        | vorhandenen Gebirgen mitsamt ihrer Attribute zuzugreifen. Klickt man auf ein Gebirge 
+                        | in der tabelle, zoomt die Karte dorthin nund das PopUp mit den Attributen öffnet sich.
+            .col-12.col-md-6.mb-3
+                .card.text-dark.shadow.p-4(style= 'height: 250px;')
+                    a.h3(aria-current='page' href='/routing') Route
+                    a(style = 'text-align: justify')
+                        | Unter Route hat man die Möglichkeit den eigenen Standort abzurufen.
+                        | Durch ankllicken eines Gebirges wird dann auf der Karte eine berechntete Route angezeigt.
+                        | Man ist sogar in der Lage zwischen verschiedenen Fortbewegungsarten zu wählen.

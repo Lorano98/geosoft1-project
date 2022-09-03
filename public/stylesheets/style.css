@@ -2,37 +2,38 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   min-height: 100%;
+  text-align: justify;
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
 
-nav{
+nav {
   margin-bottom: 20px;
   padding: 8px !important;
 }
 
-button{
+button {
   max-width: 300px;
   margin: 5px 0px !important;
   margin-right: 5px !important;
 }
 
-#map { 
-  height: 100%; 
+#map {
+  height: 100%;
   margin-top: 10px;
 }
 
-.cardAnlegen{
+.cardAnlegen {
   min-height: 560px;
 }
 
-#speichern{
+#speichern {
   margin-top: 5px;
 }
 
-#anlegenTextarea{
+#anlegenTextarea {
   height: 350px;
 }
 
@@ -42,5 +43,4 @@ button{
   border-radius: 50%;
   cursor: pointer;
   padding: 0;
-  }
-
+}

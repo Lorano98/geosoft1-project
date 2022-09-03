@@ -10,6 +10,7 @@ var addRouter = require("./routes/add");
 var editRouter = require("./routes/edit");
 var showRouter = require("./routes/show");
 var routingRouter = require("./routes/routing");
+var impressumRouter = require("./routes/impressum");
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use("/add", addRouter);
 app.use("/edit", editRouter);
 app.use("/show", showRouter);
 app.use("/routing", routingRouter);
+app.use("/impressum", impressumRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
