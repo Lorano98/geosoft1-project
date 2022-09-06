@@ -15,12 +15,9 @@ fileInput.addEventListener("change", fileChange);
 
 var mountainIcon = L.icon({
   iconUrl: "images/mountain-svgrepo-com.svg",
-  //shadowUrl: "leaf-shadow.png",
-  iconSize: [35, 46], // size of the icon
-  //shadowSize: [50, 64], // size of the shadow
-  iconAnchor: [17, 46], // point of the icon which will correspond to marker's location
-  //shadowAnchor: [4, 62], // the same for the shadow
-  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+  iconSize: [35, 46], // // Größe des Icon
+  iconAnchor: [17, 46], // punkt vom icon, relativ von dem Markerpunkt
+  popupAnchor: [-3, -76], // punkt von dem das PopUp relativ zum iconAnchor öffnet
 });
 
 // Karte mit Zentrum definieren
@@ -32,7 +29,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
-//Fügt alle Punkte auf der Karte ein
+/**
+ * Festlegen der Marker- und Popup-Struktur für jedes Element
+ * in der Geo-JSON Datei, sowie das Hinzufügen zur Karte und von dem PopUp
+ */
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
   let p = item.properties;
