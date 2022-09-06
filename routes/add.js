@@ -8,7 +8,7 @@ const client = new MongoClient(url); // mongodb client
 const dbName = "mydb"; // database name
 const collectionName = "gebirge"; // collection nam
 
-const axios = require("axios").default;
+const axios = require("axios").default; //für Wikipedia
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -33,35 +33,7 @@ router.get("/", function (req, res, next) {
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
 router.post("/finish", function (req, res, next) {
   console.log("Punkt hinzugefügt");
-  /*
-  var beschr;
 
-  // Prüfen, ob Link ungültig ist
-  if (!isValidHttpUrl(req.body.url)) {
-    beschr = "Keine Informationen verfügbar";
-    console.log(beschr);
-    // Prüfen, ob der Link kein wikipedialink ist
-  } else if (req.body.url.indexOf("wikipedia") === -1) {
-    beschr = "Keine Informationen verfügbar";
-    console.log(beschr);
-  } else {
-    let urlArray = req.body.url.split("/");
-    let title = urlArray[urlArray.length - 1];
-    console.log(title);
-    (async () => {
-      await axios
-        .get(
-          "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=1&origin=*&titles=" +
-            title
-        )
-        .then(function (response) {
-          // Beschreibung aus der response rausfiltern
-          const pageKey = Object.keys(response.data.query.pages)[0];
-          beschr = response.data.query.pages[pageKey].extract;
-        });
-    })();
-  }
-*/
   //geojson
   data = [
     {
@@ -84,28 +56,10 @@ router.post("/finish", function (req, res, next) {
   (async () => {
     await getBeschreibung();
   })();
+  // Await hat nicht funktioniert, deswegen der timeout.
   setTimeout(function () {
     addPoint(res);
   }, 1500);
-  /*
-  // connect to the mongodb database and afterwards, insert one the new element
-  client.connect(function (err) {
-    console.log("Connected successfully to server");
-
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-
-    // Insert the document in the database
-    collection.insertOne(gebirge, function (err, result) {
-      console.log(
-        `Inserted ${result.insertedCount} document into the collection`
-      );
-      res.render("add_notification", {
-        title: "Vorgang abgeschlossen",
-        data: gebirge,
-      });
-    });
-  });*/
 });
 
 // Wird ausgeführt, wenn der Speichern Button gedrückt wurde
@@ -114,6 +68,7 @@ router.post("/finishGeoJSON", function (req, res, next) {
   (async () => {
     await getBeschreibung();
   })();
+  // Await hat nicht funktioniert, deswegen der timeout.
   setTimeout(function () {
     addPoint(res);
   }, 1500);
@@ -121,8 +76,10 @@ router.post("/finishGeoJSON", function (req, res, next) {
 
 module.exports = router;
 
+/**
+ * Ermittelt die Beschreibung des Gebirges.
+ */
 async function getBeschreibung() {
-  //for (let i = 0; i < data.length; i++) {
   await data.forEach((element) => {
     (async () => {
       var prop = element.properties;
@@ -146,6 +103,11 @@ async function getBeschreibung() {
   });
 }
 
+/**
+ * Liefert die Beschreibung anhand des Titels zurück.
+ * @param {*} title
+ * @returns
+ */
 async function axiosAbfrage(title) {
   return axios.get(
     "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=2&origin=*&titles=" +
@@ -153,6 +115,10 @@ async function axiosAbfrage(title) {
   );
 }
 
+/**
+ * Fügt die übergebenen Elemente in die Datenbank hinzu.
+ * @param {*} res
+ */
 function addPoint(res) {
   // connect to the mongodb database and afterwards, insert one the new element
   client.connect(function (err) {
@@ -161,8 +127,6 @@ function addPoint(res) {
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
 
-    console.log("----------data-------------");
-    console.log(data);
     // Insert the document in the database
     collection.insertMany(data, function (err, result) {
       console.log(
@@ -176,8 +140,12 @@ function addPoint(res) {
   });
 }
 
-// von Stackoverflow
-// https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+/**
+ * Überprüft die Syntax, ob diese einem gültigen Link entspricht.
+ * Quelle: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+ * @param {*} string
+ * @returns
+ */
 function isValidHttpUrl(string) {
   let url;
 

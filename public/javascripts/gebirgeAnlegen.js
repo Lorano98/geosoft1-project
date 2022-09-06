@@ -8,6 +8,7 @@ var yInput = document.getElementById("y");
 var textareaGeoJSON = document.getElementById("anlegenTextarea");
 var fileInput = document.getElementById("geojsonFile");
 
+// Events, wenn einer der Felder verändert wird.
 xInput.addEventListener("change", checkInputs);
 yInput.addEventListener("change", checkInputs);
 textareaGeoJSON.addEventListener("change", checkTextArea);
@@ -70,7 +71,7 @@ geojson.forEach((item) => {
     .bindPopup(popupText);
 });
 
-// Toolbar zum Zeichnen von Rechtecken
+// Toolbar zum Zeichnen
 var drawnItems = new L.FeatureGroup();
 map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
@@ -113,6 +114,10 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
   }
 });
 
+/**
+ * Überprüft, ob alle Inputfelder der Koordinaten gefüllt sind und
+ * aktiviert/deaktiviert den Speichernknopf.
+ */
 function checkInputs() {
   if (
     yInput.value == null ||
@@ -126,6 +131,9 @@ function checkInputs() {
   }
 }
 
+/**
+ * Überprüft, dass das eingeladene geojson die richtige Struktur hat
+ */
 function checkTextArea() {
   if (!isJsonString(textareaGeoJSON.value)) {
     document.getElementById("anlegenGeoJSONSpeichern").disabled = true;
@@ -134,8 +142,12 @@ function checkTextArea() {
   }
 }
 
-// Von Stack Overflow
-// https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string
+/**
+ * Überprüft einen Text, ob er die Struktur eines GeoJSON hat.
+ * Quelle: https://stackoverflow.com/questions/3710204/how-to-check-if-a-string-is-a-valid-json-string
+ * @param {*} str
+ * @returns
+ */
 function isJsonString(str) {
   try {
     JSON.parse(str);
@@ -145,16 +157,22 @@ function isJsonString(str) {
   return true;
 }
 
-// Von Stack Overflow
-// https://stackoverflow.com/questions/23344776/how-to-access-data-of-uploaded-json-file
+/**
+ * Wird ausgeführt, wenn eine Datei hochgeladen wurde.
+ * Quelle: https://stackoverflow.com/questions/23344776/how-to-access-data-of-uploaded-json-file
+ * @param {*} event
+ */
 function fileChange(event) {
   var reader = new FileReader();
   reader.onload = onReaderLoad;
   reader.readAsText(event.target.files[0]);
 }
 
+/**
+ * Wird ausgeführt, wenn eine Datei hochgeladen wurde.
+ * @param {*} event
+ */
 function onReaderLoad(event) {
   textareaGeoJSON.value = event.target.result;
   checkTextArea();
-  //var obj = JSON.parse(event.target.result);
 }

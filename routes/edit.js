@@ -8,7 +8,7 @@ const client = new MongoClient(url); // mongodb client
 const dbName = "mydb"; // database name
 const collectionName = "gebirge"; // collection nam
 
-const axios = require("axios").default;
+const axios = require("axios").default; //für Wikipedia
 
 var mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
@@ -109,6 +109,9 @@ router.post("/del_notification", function (req, res, next) {
 
 module.exports = router;
 
+/**
+ * Ermittelt die Beschreibung des Gebirges.
+ */
 async function getBeschreibung(url) {
   // Prüfen, ob Link ungültig ist
   if (!isValidHttpUrl(url)) {
@@ -127,6 +130,11 @@ async function getBeschreibung(url) {
   }
 }
 
+/**
+ * Liefert die Beschreibung anhand des Titels zurück.
+ * @param {*} title
+ * @returns
+ */
 async function axiosAbfrage(title) {
   return axios.get(
     "https://de.wikipedia.org/w/api.php?format=json&exintro=1&action=query&prop=extracts&explaintext=1&exsentences=2&origin=*&titles=" +
@@ -134,8 +142,12 @@ async function axiosAbfrage(title) {
   );
 }
 
-// von Stackoverflow
-// https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+/**
+ * Überprüft die Syntax, ob diese einem gültigen Link entspricht.
+ * Quelle: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+ * @param {*} string
+ * @returns
+ */
 function isValidHttpUrl(string) {
   let url;
 

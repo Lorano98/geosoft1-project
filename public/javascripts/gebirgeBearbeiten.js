@@ -8,6 +8,7 @@ var urlInput = document.getElementById("url");
 var xInput = document.getElementById("x");
 var yInput = document.getElementById("y");
 
+// Events, wenn einer der Felder verändert wird.
 xInput.addEventListener("change", checkInputs);
 yInput.addEventListener("change", checkInputs);
 
@@ -114,6 +115,10 @@ map.on(L.Draw.Event.DRAWSTART, function (e) {
   }
 });
 
+/**
+ * Überprüft, ob alle Inputfelder der Koordinaten gefüllt sind und
+ * aktiviert/deaktiviert den Speichernknopf.
+ */
 function checkInputs() {
   if (
     yInput.value == null ||
@@ -129,6 +134,10 @@ function checkInputs() {
   }
 }
 
+/**
+ * Wird ausgeführt, wenn ein Marker angeklickt wurde um diesen Auszuwählen.
+ * @param {*} e event
+ */
 function markerClick(e) {
   // Passendes Element aus dem Geojson finden
   let g = geojson.find((element) => element._id == e.target._icon.id);
