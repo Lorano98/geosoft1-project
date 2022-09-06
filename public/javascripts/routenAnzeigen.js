@@ -59,7 +59,9 @@ map.on("load", function () {
     el.style.backgroundSize = "100%";
 
     el.addEventListener("click", () => {
-      directions.setDestination(marker.geometry.coordinates);
+      setTimeout(function () {
+        directions.setDestination(marker.geometry.coordinates);
+      }, 500);
     });
 
     // Add markers to the map.
