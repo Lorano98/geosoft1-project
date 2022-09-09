@@ -34,43 +34,13 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 //Fügt alle Punkte auf der Karte ein
 geojson.forEach((item) => {
   let c = item.geometry.coordinates;
-  let p = item.properties;
-  /*
-  let popupText =
-    "<table  class='table table-striped table-dark table-hover'>" +
-    "  <tr>" +
-    "    <th>Name</th>" +
-    "    <td>" +
-    p.name +
-    "</td>" +
-    "  </tr>" +
-    "  <tr>" +
-    "    <th>Höhe</th>" +
-    "    <td>" +
-    p.hoehe +
-    "</td>" +
-    "  </tr>" +
-    "  <tr>" +
-    "    <th>Url</th>" +
-    "    <td>" +
-    p.url +
-    "</td>" +
-    "  </tr>" +
-    "  <tr>" +
-    "    <th>Beschreibung</th>" +
-    "    <td>" +
-    p.beschreibung +
-    "</td>" +
-    "  </tr>" +
-    "</table>";
-*/
+
   // Alle Marker werden unter ihrer Id gespeichert
   markerObjekt[item._id] = L.marker([c[1], c[0]], { icon: mountainIcon })
     .addTo(map)
     .on("click", markerClick);
 
   markerObjekt[item._id]._icon.id = item._id;
-  //.bindPopup(popupText)
 });
 
 // Toolbar zum Zeichnen
